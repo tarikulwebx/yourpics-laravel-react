@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 import "./Navbar.scss";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar = () => {
+    const { isLoggedIn, user } = useContext(UserContext);
     return (
         <header className="navbar app-navbar navbar-expand-lg navbar-dark sticky-top px-sm-2 shadow-sm">
             <div className="container-xl">
@@ -17,16 +19,29 @@ const Navbar = () => {
                 </Link>
                 {/* Profile dropdown for small device */}
                 <div className="d-flex align-items-center d-lg-none gap-2">
-                    <Link className="btn btn-sm btn-outline-light" to="signin">
-                        Sign In
-                    </Link>
-                    <Link className="btn btn-sm btn-primary" to="signup">
-                        Sign Up
-                    </Link>
+                    {isLoggedIn === false && (
+                        <>
+                            <Link
+                                className="btn btn-sm btn-outline-light"
+                                to="signin"
+                            >
+                                Sign In
+                            </Link>
+                            <Link
+                                className="btn btn-sm btn-primary"
+                                to="signup"
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    )}
 
-                    <div className="dropdown profile-dropdown">
-                        <ProfileDropdown />
-                    </div>
+                    {isLoggedIn === true && (
+                        <div className="dropdown profile-dropdown">
+                            <ProfileDropdown user={user} />
+                        </div>
+                    )}
+
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -65,27 +80,33 @@ const Navbar = () => {
                                 Contact
                             </Link>
                         </li>
-                        <li className="nav-item d-none d-lg-inline-block px-1">
-                            <Link
-                                className="btn btn-sm btn-outline-light"
-                                to="signin"
-                            >
-                                Sign In
-                            </Link>
-                        </li>
-                        <li className="nav-item d-none d-lg-inline-block px-1">
-                            <Link
-                                className="btn btn-sm btn-primary"
-                                to="signup"
-                            >
-                                Sign Up
-                            </Link>
-                        </li>
+                        {isLoggedIn === false && (
+                            <>
+                                <li className="nav-item d-none d-lg-inline-block px-1">
+                                    <Link
+                                        className="btn btn-sm btn-outline-light"
+                                        to="signin"
+                                    >
+                                        Sign In
+                                    </Link>
+                                </li>
+                                <li className="nav-item d-none d-lg-inline-block px-1">
+                                    <Link
+                                        className="btn btn-sm btn-primary"
+                                        to="signup"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </li>
+                            </>
+                        )}
 
                         {/* Profile dropdown for large device */}
-                        <li className="nav-item dropdown profile-dropdown d-none d-lg-block">
-                            <ProfileDropdown />
-                        </li>
+                        {isLoggedIn === true && (
+                            <li className="nav-item dropdown profile-dropdown d-none d-lg-block">
+                                <ProfileDropdown user={user} />
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>

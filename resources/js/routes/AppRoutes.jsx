@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import AdminApp from "../AdminApp";
+import { UserContext } from "../contexts/UserContext";
 import About from "../pages/About";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
@@ -10,8 +11,12 @@ import Gallery from "../pages/Gallery";
 import Home from "../pages/Home";
 import Profile from "../pages/profile/Profile";
 import PublicApp from "../PublicApp";
+import Protected from "./Protected";
+import UnProtected from "./UnProtected";
 
 const AppRoutes = () => {
+    const { isLoggedIn, user } = useContext(UserContext);
+    console.log(isLoggedIn);
     return (
         <Routes>
             <Route path="/" element={<PublicApp />}>
@@ -19,9 +24,30 @@ const AppRoutes = () => {
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
-                <Route path="signin" element={<SignIn />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route path="profile" element={<Profile />} />
+                <Route
+                    path="signin"
+                    element={
+                        <UnProtected isLoggedIn={isLoggedIn}>
+                            <SignIn />
+                        </UnProtected>
+                    }
+                />
+                <Route
+                    path="signup"
+                    element={
+                        <UnProtected isLoggedIn={isLoggedIn}>
+                            <SignUp />
+                        </UnProtected>
+                    }
+                />
+                <Route
+                    path="profile"
+                    element={
+                        <Protected isLoggedIn={isLoggedIn}>
+                            <Profile />
+                        </Protected>
+                    }
+                />
             </Route>
             <Route path="/admin" element={<AdminApp />} />
         </Routes>

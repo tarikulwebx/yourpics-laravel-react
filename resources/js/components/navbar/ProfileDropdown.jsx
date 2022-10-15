@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ProfileDropdown.scss";
 import { FaPencilAlt, FaUser, FaUpload, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ user }) => {
+    const { setIsLoggedIn, setUser } = useContext(UserContext);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            axios
+                .post("/logout")
+                .then((res) => {
+                    setIsLoggedIn(false);
+                    setUser([]);
+                })
+                .catch((ex) => {
+                    console.log(ex);
+                });
+        });
+    };
+
     return (
         <>
             <a
@@ -24,7 +43,12 @@ const ProfileDropdown = () => {
             <ul className="dropdown-menu dropdown-menu-end shadow border-0">
                 <li>
                     <h5 className="dropdown-header text-center">
-                        Tarikul Islam
+                        <span
+                            className="d-inline-block text-truncate"
+                            style={{ width: "100px" }}
+                        >
+                            {user.first_name} {user.last_name}
+                        </span>
                     </h5>
                 </li>
                 <li>
@@ -52,7 +76,7 @@ const ProfileDropdown = () => {
                     <hr className="dropdown-divider" />
                 </li>
                 <li>
-                    <form>
+                    <form onSubmit={handleLogout}>
                         <button
                             id="signoutBtn"
                             className="dropdown-item"

@@ -1,7 +1,75 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 
 const SignIn = () => {
+    const [errors, setErrors] = useState({});
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(false);
+
+    const navigate = useNavigate();
+
+    const { isLoggedIn, setIsLoggedIn, user, setUser } =
+        useContext(UserContext);
+
+    // Get Signed In User info
+    const getLoggedInUser = () => {
+        axios
+            .get("/getUser")
+            .then((res) => {
+                // console.log(res);
+                if (Object.keys(res.data).length > 0) {
+                    setIsLoggedIn(true);
+                    setUser(res.data);
+                } else {
+                    setIsLoggedIn(false);
+                    setUser({});
+                }
+            })
+            .catch((ex) => {
+                let res = ex.response;
+                console.log(res);
+            });
+    };
+
+    // Handle SignIn Form Submit
+    const signInFormHandler = (e) => {
+        e.preventDefault();
+
+        setIsProcessing(true);
+
+        const formData = new FormData(e.currentTarget);
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            axios
+                .post("/login", formData)
+                .then((res) => {
+                    setErrors({});
+
+                    // Already logged in
+                    if (res.status === 200) {
+                        console.log("You are already logged in");
+                        setIsCompleted(true);
+                        setTimeout(() => {
+                            navigate("/profile", { replace: true });
+                        }, 700);
+                    }
+
+                    // Logged in successfully
+                    if (res.status === 204) {
+                        setIsCompleted(true);
+                        getLoggedInUser();
+                    }
+
+                    setIsProcessing(false);
+                })
+                .catch((ex) => {
+                    let res = ex.response;
+                    setErrors(res.data.errors);
+                    setIsProcessing(false);
+                });
+        });
+    };
+
     return (
         <section className="px-sm-2 py-4 my-2 my-sm-3">
             <div className="container-xl">
@@ -13,7 +81,10 @@ const SignIn = () => {
                                     Login Account
                                 </h3>
 
-                                <form autocomplete="on">
+                                <form
+                                    onSubmit={signInFormHandler}
+                                    autoComplete="on"
+                                >
                                     <div className="row gy-3 gx-3">
                                         <div className="col-12">
                                             <label
@@ -26,12 +97,21 @@ const SignIn = () => {
                                                 type="email"
                                                 name="email"
                                                 id="email"
-                                                className="form-control"
+                                                className={
+                                                    errors.email
+                                                        ? "form-control is-invalid"
+                                                        : "form-control"
+                                                }
                                                 placeholder="Enter email"
                                                 autoFocus
                                                 required
                                                 autoComplete="email"
                                             />
+                                            {errors.email && (
+                                                <div className="invalid-feedback">
+                                                    {errors.email}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <label
@@ -44,17 +124,41 @@ const SignIn = () => {
                                                 type="password"
                                                 name="password"
                                                 id="password"
-                                                className="form-control is-invalid"
+                                                className="form-control"
                                                 placeholder="Enter password"
                                                 required
                                             />
-                                            <div class="invalid-feedback">
-                                                Please enter your name.
-                                            </div>
                                         </div>
                                         <div className="col-12">
-                                            <button className="btn btn-primary w-100 py-2 mt-1 fw-normal">
-                                                Sign Up
+                                            <div className="mb-2 form-check fw-light">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-check-input"
+                                                    id="remember"
+                                                    name="remember"
+                                                    value={true}
+                                                />
+                                                <label
+                                                    className="form-check-label"
+                                                    htmlFor="remember"
+                                                >
+                                                    Remember me
+                                                </label>
+                                            </div>
+
+                                            <button
+                                                type="submit"
+                                                className={
+                                                    isProcessing || isCompleted
+                                                        ? "btn btn-primary w-100 py-2 mt-1 fw-normal disabled"
+                                                        : "btn btn-primary w-100 py-2 mt-1 fw-normal"
+                                                }
+                                            >
+                                                {isProcessing
+                                                    ? "Signing In..."
+                                                    : isCompleted
+                                                    ? "Signed In"
+                                                    : "Sign In"}
                                             </button>
                                         </div>
                                     </div>
