@@ -1,0 +1,8 @@
+.form-control {
+    padding: 0.525rem 0.75rem;
+    border-color: #e5e5e5;
+
+    &::placeholder {
+        font-weight: 300;
+    }
+}
