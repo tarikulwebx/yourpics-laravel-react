@@ -1,0 +1,15 @@
+.footer-bottom {
+    background-color: #333;
+    p {
+        color: #ccc;
+        font-size: 0.9rem;
+
+        a {
+            transition: 0.2s all;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}

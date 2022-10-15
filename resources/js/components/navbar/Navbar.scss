@@ -1,0 +1,28 @@
+@use "../../../sass/variables" as *;
+
+.app-navbar {
+    backdrop-filter: blur(20px);
+    background: linear-gradient(135deg, $primary, $secondary);
+
+    .navbar-brand {
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        font-size: 1.25rem;
+        
+        img {
+        height: 44px;
+        width: auto;
+    }
+    }
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        
+        &:hover {
+            color: $white;
+        }
+        &.active {
+            color: $white;
+        }
+    }
+}

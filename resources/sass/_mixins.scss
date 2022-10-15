@@ -1,0 +1,21 @@
+@mixin hover-underline {
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+
+    &::before {
+        content: "";
+        width: 0;
+        height: 1px;
+        background-color: white;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: 0.25s all;
+    }
+
+    &:hover::before {
+        width: 100%;
+    }
+}

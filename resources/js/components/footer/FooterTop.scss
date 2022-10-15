@@ -1,0 +1,71 @@
+@use "../../../sass/variables" as *;
+@use "../../../sass/mixins" as *;
+
+.footer-top {
+    font-size: 0.975rem;
+    background-color: $gray-800;
+
+    .site-info {
+        &__logo {
+            width: auto;
+            height: 50px;
+        }
+
+        &__name {
+            font-weight: 500;
+        }
+
+        &__description {
+            color: $gray-200;
+            font-size: 0.975rem;
+        }
+
+        &__location,
+        &__email {
+            color: $gray-400;
+            font-size: 0.9rem;
+            a {
+                color: $gray-400;
+                @include hover-underline;
+                &::before {
+                        background-color: $primary;
+                    }
+                &:hover {
+                    color: $primary;
+
+                    
+                }
+            }
+            
+        }
+    }
+
+    .list-widget {
+        &__title {
+            font-weight: 700;
+        }
+        ul li {
+            a {
+                font-size: 0.95rem;
+                color: $gray-200;
+                display: inline-block;
+                margin-bottom: 0.45rem;
+                @include hover-underline;
+                &::before {
+                        background-color: $primary;
+                    }
+                transition: 0.2s all;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+
+            &:last-child {
+                a {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
