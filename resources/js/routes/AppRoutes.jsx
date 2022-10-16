@@ -16,7 +16,6 @@ import UnProtected from "./UnProtected";
 
 const AppRoutes = () => {
     const { isLoggedIn, user } = useContext(UserContext);
-    console.log(isLoggedIn);
     return (
         <Routes>
             <Route path="/" element={<PublicApp />}>

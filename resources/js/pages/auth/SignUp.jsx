@@ -1,7 +1,57 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 
 const SignUp = () => {
+    const [errors, setErrors] = useState({});
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(false);
+
+    const { setIsLoggedIn, setUser } = useContext(UserContext);
+
+    // Get LoggedIn User info
+    const getLoggedInUser = () => {
+        axios
+            .get("/getUser")
+            .then((res) => {
+                // console.log(res);
+                if (Object.keys(res.data).length > 0) {
+                    setIsLoggedIn(true);
+                    setUser(res.data);
+                } else {
+                    setIsLoggedIn(false);
+                    setUser({});
+                }
+            })
+            .catch((ex) => {
+                let res = ex.response;
+                console.log(res);
+            });
+    };
+
+    // Form Handle
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        setIsProcessing(true);
+
+        let formData = new FormData(e.currentTarget);
+
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            axios
+                .post("/register", formData)
+                .then((res) => {
+                    setIsCompleted(true);
+                    getLoggedInUser();
+                })
+                .catch((ex) => {
+                    let res = ex.response;
+                    setErrors(res.data.errors);
+                    setIsProcessing(false);
+                });
+        });
+    };
+
     return (
         <section className="px-sm-2 py-4 my-2 my-sm-3">
             <div className="container-xl">
@@ -13,7 +63,7 @@ const SignUp = () => {
                                     Create Account
                                 </h3>
 
-                                <form autocomplete="on">
+                                <form onSubmit={handleFormSubmit}>
                                     <div className="row gy-3 gx-3">
                                         <div className="col-sm-6">
                                             <label
@@ -26,14 +76,21 @@ const SignUp = () => {
                                                 type="text"
                                                 name="first_name"
                                                 id="first_name"
-                                                className="form-control is-invalid"
+                                                className={
+                                                    errors.first_name
+                                                        ? "form-control is-invalid"
+                                                        : "form-control"
+                                                }
                                                 placeholder="Enter first name"
                                                 autoFocus
+                                                autoComplete="first_name"
                                                 required
                                             />
-                                            <div class="invalid-feedback">
-                                                Please enter your name.
-                                            </div>
+                                            {errors.first_name && (
+                                                <div className="invalid-feedback">
+                                                    {errors.first_name}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-sm-6">
                                             <label
@@ -46,9 +103,20 @@ const SignUp = () => {
                                                 type="text"
                                                 name="last_name"
                                                 id="last_name"
-                                                className="form-control"
+                                                className={
+                                                    errors.last_name
+                                                        ? "form-control is-invalid"
+                                                        : "form-control"
+                                                }
                                                 placeholder="Enter last name"
+                                                autoComplete="last_name"
+                                                required
                                             />
+                                            {errors.last_name && (
+                                                <div className="invalid-feedback">
+                                                    {errors.last_name}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <label
@@ -61,9 +129,20 @@ const SignUp = () => {
                                                 type="email"
                                                 name="email"
                                                 id="email"
-                                                className="form-control"
+                                                className={
+                                                    errors.email
+                                                        ? "form-control is-invalid"
+                                                        : "form-control"
+                                                }
                                                 placeholder="Enter email"
+                                                autoComplete="email"
+                                                required
                                             />
+                                            {errors.email && (
+                                                <div className="invalid-feedback">
+                                                    {errors.email}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <label
@@ -76,9 +155,20 @@ const SignUp = () => {
                                                 type="password"
                                                 name="password"
                                                 id="password"
-                                                className="form-control"
+                                                className={
+                                                    errors.password
+                                                        ? "form-control is-invalid"
+                                                        : "form-control"
+                                                }
                                                 placeholder="Enter password"
+                                                required
+                                                autoComplete="new-password"
                                             />
+                                            {errors.password && (
+                                                <div className="invalid-feedback">
+                                                    {errors.password}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <label
@@ -89,15 +179,27 @@ const SignUp = () => {
                                             </label>
                                             <input
                                                 type="password"
-                                                name="password_confirm"
-                                                id="password_confirm"
+                                                name="password_confirmation"
+                                                id="password_confirmation"
                                                 className="form-control"
                                                 placeholder="Rewrite password"
+                                                required
+                                                autoComplete="new-password"
                                             />
                                         </div>
                                         <div className="col-12">
-                                            <button className="btn btn-primary w-100 py-2 mt-1 fw-normal">
-                                                Sign Up
+                                            <button
+                                                className={
+                                                    isProcessing || isCompleted
+                                                        ? "btn btn-primary w-100 py-2 mt-1 fw-normal disabled"
+                                                        : "btn btn-primary w-100 py-2 mt-1 fw-normal"
+                                                }
+                                            >
+                                                {isProcessing
+                                                    ? "Signing Up..."
+                                                    : isCompleted
+                                                    ? "Signed Up"
+                                                    : "Sign Up"}
                                             </button>
                                         </div>
                                     </div>

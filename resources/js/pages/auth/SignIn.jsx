@@ -81,10 +81,7 @@ const SignIn = () => {
                                     Login Account
                                 </h3>
 
-                                <form
-                                    onSubmit={signInFormHandler}
-                                    autoComplete="on"
-                                >
+                                <form onSubmit={signInFormHandler}>
                                     <div className="row gy-3 gx-3">
                                         <div className="col-12">
                                             <label
@@ -124,10 +121,20 @@ const SignIn = () => {
                                                 type="password"
                                                 name="password"
                                                 id="password"
-                                                className="form-control"
+                                                className={
+                                                    errors.password
+                                                        ? "form-control is-invalid"
+                                                        : "form-control"
+                                                }
                                                 placeholder="Enter password"
                                                 required
+                                                autoComplete="current-password"
                                             />
+                                            {errors.password && (
+                                                <div className="invalid-feedback">
+                                                    {errors.password}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="col-12">
                                             <div className="mb-2 form-check fw-light">
