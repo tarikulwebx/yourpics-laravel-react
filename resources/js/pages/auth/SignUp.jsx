@@ -213,15 +213,15 @@ const SignUp = () => {
                                                 Sign In
                                             </strong>
                                         </Link>
-                                        <a
-                                            href="!#"
+                                        <Link
+                                            to="/password-reset"
                                             className="text-decoration-none small"
                                         >
                                             Forgot password?{" "}
                                             <strong className="fw-semibold">
                                                 Reset
                                             </strong>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </form>
                             </div>

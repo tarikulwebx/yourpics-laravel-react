@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminApp from "../AdminApp";
 import { UserContext } from "../contexts/UserContext";
 import About from "../pages/About";
+import ResetEmail from "../pages/auth/password/ResetEmail";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
 import Contact from "../pages/Contact";
@@ -23,6 +24,8 @@ const AppRoutes = () => {
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
+
+                {/* Auth Routes */}
                 <Route
                     path="signin"
                     element={
@@ -39,6 +42,17 @@ const AppRoutes = () => {
                         </UnProtected>
                     }
                 />
+
+                <Route
+                    path="password-reset-email"
+                    element={
+                        <UnProtected isLoggedIn={isLoggedIn}>
+                            <ResetEmail />
+                        </UnProtected>
+                    }
+                />
+
+                {/* Profile Routes */}
                 <Route
                     path="profile"
                     element={
@@ -48,6 +62,8 @@ const AppRoutes = () => {
                     }
                 />
             </Route>
+
+            {/* Admin Routes */}
             <Route path="/admin" element={<AdminApp />} />
         </Routes>
     );
