@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// Tag routes
+Route::get('/getAllTags', [TagController::class, 'getAllTags']);
 
 
 // Picture routes
