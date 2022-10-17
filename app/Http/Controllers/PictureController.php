@@ -6,6 +6,7 @@ use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 
 class PictureController extends Controller
 {
@@ -18,6 +19,20 @@ class PictureController extends Controller
     {
         //
     }
+
+
+
+    /**
+     * All Uploads of User
+     */
+    public function getUploadedPictures()
+    {
+        $pictures = auth()->user()->pictures()->with('user')->get();
+
+        return response()->json($pictures, 200);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

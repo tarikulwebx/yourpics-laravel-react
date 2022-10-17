@@ -31,6 +31,7 @@ Route::get('/getAllTags', [TagController::class, 'getAllTags']);
 // Picture routes
 Route::middleware(['auth'])->group(function () {
     Route::post('/pictureStore', [PictureController::class, 'store']);
+    Route::get('/getUploadedPictures', [PictureController::class, 'getUploadedPictures']);
 });
 
 
