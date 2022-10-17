@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,5 +64,18 @@ class User extends Authenticatable
                 'source' => ['first_name', 'last_name']
             ]
         ];
+    }
+
+
+    /**
+     * Get the user's first name.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function picture(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => url("/") . "/storage/" . $value,
+        );
     }
 }

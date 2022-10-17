@@ -1,0 +1,28 @@
+@use "../../../../sass/variables" as *;
+ 
+.profile-navigation {
+    // background-color: $gray-200;
+
+    button,
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0.75rem;
+
+        .icon {
+            color: $secondary;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+
+        &.active,
+        &:hover {
+            background-color: $primary;
+            color: $white;
+        }
+    }
+
+    
+}

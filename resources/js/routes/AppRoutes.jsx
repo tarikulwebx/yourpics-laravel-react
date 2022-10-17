@@ -10,7 +10,12 @@ import SignUp from "../pages/auth/SignUp";
 import Contact from "../pages/Contact";
 import Gallery from "../pages/Gallery";
 import Home from "../pages/Home";
+import Dashboard from "../pages/profile/Dashboard";
+import EditProfile from "../pages/profile/EditProfile";
+import Favorites from "../pages/profile/Favorites";
 import Profile from "../pages/profile/Profile";
+import Trash from "../pages/profile/Trash";
+import Uploads from "../pages/profile/Uploads";
 import PublicApp from "../PublicApp";
 import Protected from "./Protected";
 import UnProtected from "./UnProtected";
@@ -60,7 +65,13 @@ const AppRoutes = () => {
                             <Profile />
                         </Protected>
                     }
-                />
+                >
+                    <Route index element={<Dashboard />} />
+                    <Route path="edit" element={<EditProfile />} />
+                    <Route path="uploads" element={<Uploads />} />
+                    <Route path="favorites" element={<Favorites />} />
+                    <Route path="trash" element={<Trash />} />
+                </Route>
             </Route>
 
             {/* Admin Routes */}

@@ -33,10 +33,13 @@ const ProfileDropdown = ({ user }) => {
                 aria-expanded="false"
             >
                 <img
-                    src="assets/images/profile-picture.jpg"
+                    src={
+                        user.picture
+                            ? user.picture
+                            : "/assets/images/profile-placeholder.jpg"
+                    }
                     className="rounded-circle"
                     alt=""
-                    width={40}
                 />
             </a>
 

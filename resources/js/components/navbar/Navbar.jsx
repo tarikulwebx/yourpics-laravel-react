@@ -11,7 +11,7 @@ const Navbar = () => {
             <div className="container-xl">
                 <Link className="navbar-brand text-uppercase" to="/">
                     <img
-                        src="assets/images/logo.png"
+                        src="/assets/images/logo.png"
                         className="me-2"
                         alt="Logo"
                     />
