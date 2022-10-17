@@ -16,12 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        $this->call([
+            UserTableSeeder::class,
+            TagSeeder::class,
+        ]);
+
         // \App\Models\User::factory(10)->create();
 
-        User::factory()->create([
-            'first_name' => 'Tarikul',
-            'last_name' => 'Islam',
-            'email' => 'tarikul@test.com',
-        ]);
+        // User::factory()->create([
+        //     'first_name' => 'Tarikul',
+        //     'last_name' => 'Islam',
+        //     'email' => 'tarikul@test.com',
+        // ]);
     }
 }

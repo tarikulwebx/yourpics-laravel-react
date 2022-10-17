@@ -18,6 +18,9 @@ const Upload = () => {
     // handle upload form
     const handleUploadFormSubmit = (e) => {
         e.preventDefault();
+
+        let formData = new FormData(e.currentTarget);
+        console.log(formData);
     };
 
     return (
@@ -89,6 +92,31 @@ const Upload = () => {
                                     {errors.title && (
                                         <div className="invalid-feedback">
                                             {errors.title}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="col-12">
+                                    <label
+                                        htmlFor="tags"
+                                        className="form-label mb-1 fw-light"
+                                    >
+                                        Tags
+                                    </label>
+                                    <select
+                                        className="form-select form-control"
+                                        name="tags[]"
+                                    >
+                                        <option selected>
+                                            Open this select menu
+                                        </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                    {errors.tags && (
+                                        <div className="invalid-feedback">
+                                            {errors.tags}
                                         </div>
                                     )}
                                 </div>

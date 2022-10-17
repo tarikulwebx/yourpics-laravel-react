@@ -32,6 +32,12 @@ class User extends Authenticatable
         'slug',
     ];
 
+    // Picture relation
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

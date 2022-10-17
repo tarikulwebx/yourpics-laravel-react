@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +22,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('getUser', [UserController::class, "get_user"]);
 
+// Picture routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/pictureStore', [PictureController::class, 'store']);
+});
+
+
+// Get logged-in user info
+Route::get('getUser', [UserController::class, "get_user"]);
 
 
 // Profile 
