@@ -9,6 +9,9 @@ import {
     FaSignOutAlt,
     FaTrashAlt,
 } from "react-icons/fa";
+
+import { FiUpload } from "react-icons/fi";
+
 import { BsImages } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 
@@ -27,6 +30,12 @@ const ProfileNavigation = () => {
                 className="btn btn-sm shadow border-0 btn-light"
             >
                 <FaEdit className="icon" /> Edit Profile
+            </NavLink>
+            <NavLink
+                to="/profile/upload"
+                className="btn btn-sm shadow border-0 btn-light"
+            >
+                <FiUpload className="icon" /> New Upload
             </NavLink>
             <NavLink
                 to="/profile/uploads"
