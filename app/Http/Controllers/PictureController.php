@@ -166,4 +166,15 @@ class PictureController extends Controller
     {
         //
     }
+
+    // Move to trash
+    public function moveToTrash($id)
+    {
+        $user = auth()->user();
+        $picture = Picture::where('id', $id)->where('user_id', $user->id)->limit(1)->get();
+        if ($picture[0]->delete()) {
+            return response()->json("Deleted successfully");
+        }
+        return response()->json();
+    }
 }

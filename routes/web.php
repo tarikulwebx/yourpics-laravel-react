@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pictureStore', [PictureController::class, 'store']);
     Route::get('/getUploadedPictures', [PictureController::class, 'getUploadedPictures']);
     Route::post('/pictureUpdate/{id}', [PictureController::class, 'update']);
+    Route::delete('/moveToTrash/{id}', [PictureController::class, 'moveToTrash']);
 });
 
 
