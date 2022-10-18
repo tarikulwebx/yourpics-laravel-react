@@ -20,9 +20,7 @@ const Uploads = () => {
                 console.log(res);
             })
             .then((res) => {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 700);
+                setIsLoading(false);
             });
     }, []);
 

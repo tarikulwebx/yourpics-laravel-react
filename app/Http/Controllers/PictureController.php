@@ -103,6 +103,17 @@ class PictureController extends Controller
         //
     }
 
+
+    /**
+     * Get Picture by Slug
+     */
+    public function getPictureBySlug($slug)
+    {
+        $picture = Picture::findBySlugOrFail($slug);
+        $picture->tags;
+        return response()->json($picture, 200,);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -121,9 +132,28 @@ class PictureController extends Controller
      * @param  \App\Models\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Picture $picture)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "title" => "required|string|max:255",
+            "description" => "nullable|string|max:800",
+            'tags' => 'required|array|min:1'
+        ]);
+
+        $inputs = $request->all();
+        $picture = Picture::findOrFail($id);
+
+        $picture->update([
+            "title" => $request->title,
+            "description" => $request->description,
+        ]);
+
+        $selected_tags = $request->tags;
+        $selected_tags_int_arr = array_map('intval', $selected_tags);
+
+        $picture->tags()->sync($selected_tags_int_arr);
+
+        return response()->json("Updated successfully", 200,);
     }
 
     /**

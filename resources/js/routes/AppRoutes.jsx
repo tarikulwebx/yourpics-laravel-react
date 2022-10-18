@@ -16,6 +16,7 @@ import Favorites from "../pages/profile/Favorites";
 import Profile from "../pages/profile/Profile";
 import Trash from "../pages/profile/Trash";
 import Upload from "../pages/profile/Upload";
+import UploadEdit from "../pages/profile/UploadEdit";
 import Uploads from "../pages/profile/Uploads";
 import PublicApp from "../PublicApp";
 import Protected from "./Protected";
@@ -71,6 +72,7 @@ const AppRoutes = () => {
                     <Route path="edit" element={<EditProfile />} />
                     <Route path="upload" element={<Upload />} />
                     <Route path="uploads" element={<Uploads />} />
+                    <Route path="upload-edit/:slug" element={<UploadEdit />} />
                     <Route path="favorites" element={<Favorites />} />
                     <Route path="trash" element={<Trash />} />
                 </Route>

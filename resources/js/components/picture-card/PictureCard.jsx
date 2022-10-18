@@ -2,6 +2,7 @@ import React from "react";
 import "./PictureCard.scss";
 import { FaRegHeart, FaHeart, FaMedal, FaEdit } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const PictureCard = ({ picture, isEditable = false }) => {
     return (
@@ -13,14 +14,18 @@ const PictureCard = ({ picture, isEditable = false }) => {
                 <div className="card-hover-content__header d-flex align-items-center justify-content-between">
                     <div
                         className="caption fw-semibold text-truncate"
-                        style={{ width: "120px" }}
+                        style={{ width: "130px" }}
                     >
-                        Caption Title
+                        {picture.title}
                     </div>
                     {isEditable ? (
-                        <a href="#" className="btn edit-btn" title="edit">
+                        <Link
+                            to={`/profile/upload-edit/${picture.slug}`}
+                            className="btn edit-btn"
+                            title="edit"
+                        >
                             <FaEdit />
-                        </a>
+                        </Link>
                     ) : (
                         <button className="btn fav-btn" title="favorite">
                             <FaRegHeart />
@@ -31,7 +36,11 @@ const PictureCard = ({ picture, isEditable = false }) => {
                     <div className="author d-flex align-items-center gap-2">
                         <a href="#">
                             <img
-                                src="/assets/images/profile-picture.jpg"
+                                src={
+                                    picture.user.picture
+                                        ? picture.user.picture
+                                        : "/assets/images/profile-placeholder.jpg"
+                                }
                                 className="author__picture rounded-circle d-block"
                                 alt=""
                                 width={40}
@@ -44,7 +53,8 @@ const PictureCard = ({ picture, isEditable = false }) => {
                                     className="text-decoration-none d-block text-truncate"
                                     style={{ width: "120px" }}
                                 >
-                                    Tarikul Islam
+                                    {picture.user.first_name}{" "}
+                                    {picture.user.last_name}
                                 </a>
                             </h6>
                             <small className="author__rank d-block">
