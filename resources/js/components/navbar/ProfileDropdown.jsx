@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import "./ProfileDropdown.scss";
 import { FaPencilAlt, FaUser, FaUpload, FaSignOutAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { BsImages } from "react-icons/bs";
+import { Link, NavLink } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
 const ProfileDropdown = ({ user }) => {
@@ -58,21 +59,21 @@ const ProfileDropdown = ({ user }) => {
                     <div className="dropdown-divider"></div>
                 </li>
                 <li>
-                    <Link className="dropdown-item active" to="/profile">
+                    <NavLink className="dropdown-item" to="/profile" end>
                         <FaUser className="icon" /> Profile
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <a className="dropdown-item" href="profile-edit.html">
+                    <NavLink className="dropdown-item" to="/profile/edit">
                         <FaPencilAlt className="icon" /> Edit profile
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li>
-                    <a className="dropdown-item" href="profile-upload.html">
-                        <FaUpload className="icon" />
+                    <NavLink className="dropdown-item" to="/profile/uploads">
+                        <BsImages className="icon" />
                         Your uploads
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import "./ProfileNavigation.scss";
 
@@ -14,8 +14,25 @@ import { FiUpload } from "react-icons/fi";
 
 import { BsImages } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
+import { UserContext } from "../../../contexts/UserContext";
 
 const ProfileNavigation = () => {
+    const { setIsLoggedIn, setUser } = useContext(UserContext);
+
+    const logoutHandle = () => {
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            axios
+                .post("/logout")
+                .then((res) => {
+                    setIsLoggedIn(false);
+                    setUser([]);
+                })
+                .catch((ex) => {
+                    console.log(ex);
+                });
+        });
+    };
+
     return (
         <div className="profile-navigation d-flex flex-wrap gap-2 gap-md-3">
             <NavLink
@@ -55,7 +72,10 @@ const ProfileNavigation = () => {
             >
                 <FaTrashAlt className="icon" /> Trash
             </NavLink>
-            <button className="btn btn-sm shadow border-0 btn-light">
+            <button
+                onClick={logoutHandle}
+                className="btn btn-sm shadow border-0 btn-light"
+            >
                 <FaSignOutAlt className="icon" /> Logout
             </button>
         </div>
