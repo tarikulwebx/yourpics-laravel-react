@@ -5,7 +5,7 @@ const PicturePlaceholder = () => {
         <p className="placeholder-glow rounded mb-0 ">
             <span
                 className="placeholder col-12 rounded"
-                style={{ height: "190px" }}
+                style={{ height: "220px" }}
             ></span>
         </p>
     );

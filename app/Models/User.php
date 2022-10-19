@@ -30,6 +30,7 @@ class User extends Authenticatable
         'bio',
         'is_admin',
         'slug',
+        'rank',
     ];
 
     // Picture relation

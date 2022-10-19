@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->text('bio')->nullable();
             $table->boolean('is_admin')->nullable();
+            $table->string('rank')->default('new');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -29,6 +29,9 @@ Route::get('/getAllTags', [TagController::class, 'getAllTags']);
 
 
 // Picture routes
+Route::get("/allPictures", [PictureController::class, 'allPictures']);
+Route::get("/picturesBySearch/{searchKey}", [PictureController::class, 'picturesBySearch']);
+
 Route::get('/getPictureBySlug/{slug}', [PictureController::class, 'getPictureBySlug']);
 Route::get("/download/{slug}", [PictureController::class, 'download']);
 

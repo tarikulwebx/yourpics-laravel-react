@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import LoadingGrow from "../../components/loader/LoadingGrow";
 import PicturePlaceholder from "../../components/loader/PicturePlaceholder";
 import PictureCard from "../../components/picture-card/PictureCard";
 
@@ -41,7 +40,7 @@ const Uploads = () => {
                 ) : (
                     <>
                         {pictures.length > 0 ? (
-                            <div className="row">
+                            <div className="row g-4">
                                 {pictures.map((picture, index) => (
                                     <div className="col-xl-3" key={picture.id}>
                                         <PictureCard

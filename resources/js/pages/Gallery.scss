@@ -1,0 +1,12 @@
+@use "../../sass/variables" as *;
+
+.gallery-page {
+    
+    .search-clean-btn {
+        background-color: rgba(214, 51, 132, 0.01);
+        &:hover {
+            border-color: $secondary !important;
+            background-color: $secondary;
+        }
+    }
+}

@@ -19,6 +19,7 @@ class UserTableSeeder extends Seeder
             'first_name' => 'Tarikul',
             'last_name'  => 'Islam',
             'email'      => 'tarikul@test.com',
+            'picture' => '1666087406_tarikul-noise-reduced-squire.png'
         ]);
 
         User::factory()->create([

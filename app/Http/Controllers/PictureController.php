@@ -20,6 +20,27 @@ class PictureController extends Controller
         //
     }
 
+    /**
+     * All Pictures
+     */
+    public function allPictures()
+    {
+        $pictures = Picture::with('user')->get();
+
+        return response()->json($pictures);
+    }
+
+
+    /**
+     * Pictures by Search
+     */
+    public function picturesBySearch($searchKey)
+    {
+        $pictures = Picture::where('title', 'LIKE', '%' . $searchKey . '%')->with('user')->get();
+
+        return response()->json($pictures);
+    }
+
 
 
     /**
