@@ -32,6 +32,15 @@ class PictureController extends Controller
         return response()->json($pictures, 200);
     }
 
+    /**
+     * Get all trashed pictures
+     */
+    public function getTrashedPictures()
+    {
+        $pictures = auth()->user()->pictures()->onlyTrashed()->latest()->get();
+        return response()->json($pictures, 200,);
+    }
+
 
 
     /**
@@ -176,5 +185,20 @@ class PictureController extends Controller
             return response()->json("Deleted successfully");
         }
         return response()->json();
+    }
+
+    /**
+     * Restore Trashed Picture
+     */
+    public function restoreTrashedPicture($id)
+    {
+        $user = auth()->user();
+        $picture = Picture::withTrashed()->findOrFail($id);
+        if ($picture->user_id === $user->id) {
+            $picture->restore();
+            return response()->json("Restored successfully");
+        }
+
+        return response()->json("Your are not authorized!");
     }
 }

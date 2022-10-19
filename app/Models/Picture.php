@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -64,5 +65,15 @@ class Picture extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    /**
+     * Deleted-at attribute formate
+     */
+    protected function deletedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('Y-m-d H:i') : null
+        );
     }
 }

@@ -39,16 +39,24 @@ const Uploads = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="row">
-                        {pictures.map((picture, index) => (
-                            <div className="col-xl-3" key={picture.id}>
-                                <PictureCard
-                                    picture={picture}
-                                    isEditable={true}
-                                />
+                    <>
+                        {pictures.length > 0 ? (
+                            <div className="row">
+                                {pictures.map((picture, index) => (
+                                    <div className="col-xl-3" key={picture.id}>
+                                        <PictureCard
+                                            picture={picture}
+                                            isEditable={true}
+                                        />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        ) : (
+                            <h5 className="text-muted user-select-none text-center">
+                                No pictures
+                            </h5>
+                        )}
+                    </>
                 )}
             </div>
         </div>

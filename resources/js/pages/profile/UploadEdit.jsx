@@ -113,7 +113,7 @@ const UploadEdit = () => {
                     setTimeout(() => {
                         setIsDeleted(false);
                         navigate("/profile/uploads", { replace: true });
-                    }, 1500);
+                    }, 700);
                 })
                 .catch((ex) => {
                     let res = ex.response;
