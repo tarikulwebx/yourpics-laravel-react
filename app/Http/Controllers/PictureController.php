@@ -114,6 +114,23 @@ class PictureController extends Controller
 
 
     /**
+     * Download Picture
+     */
+    public function download($slug)
+    {
+        $picture = Picture::findBySlugOrFail($slug);
+        $picture->update([
+            'downloads' => $picture->downloads + 1,
+        ]);
+        $image_url = $picture->image;
+        $image_url_arr = explode("/", $image_url);
+        $image_name = $image_url_arr[(sizeof($image_url_arr) - 1)];
+
+        return Storage::download($image_name, $picture->slug);
+    }
+
+
+    /**
      * Get Picture by Slug
      */
     public function getPictureBySlug($slug)

@@ -5,6 +5,18 @@ import { MdDownload } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const PictureCard = ({ picture, isEditable = false }) => {
+    // const downloadPicture = (id) => {
+    //     axios
+    //         .get("/download/" + id)
+    //         .then((res) => {
+    //             console.log(res);
+    //         })
+    //         .catch((ex) => {
+    //             const res = ex.response;
+    //             console.log(res);
+    //         });
+    // };
+
     return (
         <div className="picture-card shadow-sm">
             <a href="#" className="image-wrapper-link">
@@ -63,12 +75,13 @@ const PictureCard = ({ picture, isEditable = false }) => {
                             </small>
                         </div>
                     </div>
-                    <button
+                    <a
+                        href={`/download/${picture.slug}`}
                         className="btn download-btn btn-sm rounded-3"
                         title="download"
                     >
                         <MdDownload />
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
