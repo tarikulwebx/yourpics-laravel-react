@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsImages } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
 import PicturePlaceholder from "../components/loader/PicturePlaceholder";
 import PictureCard from "../components/picture-card/PictureCard";
@@ -12,11 +13,20 @@ const Gallery = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
 
+    const [totalPicture, setTotalPicture] = useState(0);
+    const [nextPage, setNextPage] = useState(null);
+
+    // Load pictures
     const loadAllPictures = () => {
         axios
             .get("/allPictures")
             .then((res) => {
-                setPictures(res.data);
+                // console.log(res);
+                setPictures(res.data.data);
+
+                setTotalPicture(res.data.total);
+                setNextPage(res.data.current_page + 1);
+
                 setTimeout(() => {
                     setIsLoading(false);
                 }, 300);
@@ -27,8 +37,33 @@ const Gallery = () => {
             });
     };
 
+    // Load searched pictures
+    const loadSearchedPictures = (searchText) => {
+        axios
+            .get("/picturesBySearch/" + searchText)
+            .then((res) => {
+                setPictures(res.data.data);
+                setTotalPicture(res.data.total);
+                setNextPage(res.data.current_page + 1);
+                setIsLoading(false);
+            })
+            .catch((ex) => {
+                const res = ex.response;
+                console.log(res);
+                setIsLoading(false);
+            });
+    };
+
+    // Effect on Load
     useEffect(() => {
-        loadAllPictures();
+        if (
+            searchParams.get("search") &&
+            searchParams.get("search").trim().length > 0
+        ) {
+            loadSearchedPictures(searchParams.get("search").trim());
+        } else {
+            loadAllPictures();
+        }
     }, []);
 
     // Search form submit
@@ -39,22 +74,27 @@ const Gallery = () => {
 
         let searchText = searchParams.get("search");
         if (searchText.trim().length > 0) {
-            axios
-                .get("/picturesBySearch/" + searchText)
-                .then((res) => {
-                    setPictures(res.data);
-                    setIsLoading(false);
-                })
-                .catch((ex) => {
-                    const res = ex.response;
-                    console.log(res);
-                    setIsLoading(false);
-                });
+            loadSearchedPictures(searchParams.get("search").trim());
         } else {
             setIsLoading(false);
             setSearchParams({});
             alert("Please fill the search field");
         }
+    };
+
+    // Load More picture
+    const loadMorePicture = () => {
+        axios
+            .get("/allPictures?page=" + nextPage)
+            .then((res) => {
+                setNextPage(nextPage + 1);
+                var newItems = res.data.data;
+                setPictures((current) => [...current, ...newItems]);
+            })
+            .catch((ex) => {
+                const res = ex.response;
+                console.log(res);
+            });
     };
 
     return (
@@ -105,16 +145,50 @@ const Gallery = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="row gy-4">
-                        {pictures.map((picture, index) => (
-                            <div
-                                className="col-sm-6 col-md-4 col-xl-3"
-                                key={picture.id}
+                    <>
+                        {pictures.length > 0 ? (
+                            <InfiniteScroll
+                                dataLength={pictures.length}
+                                next={loadMorePicture}
+                                hasMore={
+                                    pictures.length < totalPicture
+                                        ? true
+                                        : false
+                                }
+                                loader={
+                                    <div className="row gy-4 mt-0">
+                                        {[...Array(8)].map((e, i) => (
+                                            <div className="col-xl-3" key={i}>
+                                                <PicturePlaceholder />
+                                            </div>
+                                        ))}
+                                    </div>
+                                }
+                                endMessage={
+                                    <p className="text-center text-muted mb-0 mt-3 user-select-none">
+                                        <strong>
+                                            Yay! You have seen it all
+                                        </strong>
+                                    </p>
+                                }
                             >
-                                <PictureCard picture={picture} />
-                            </div>
-                        ))}
-                    </div>
+                                <div className="row gy-4">
+                                    {pictures.map((picture, index) => (
+                                        <div
+                                            className="col-sm-6 col-md-4 col-xl-3"
+                                            key={picture.id}
+                                        >
+                                            <PictureCard picture={picture} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </InfiniteScroll>
+                        ) : (
+                            <h5 className="text-center text-muted user-select-none mt-4">
+                                No Picture Found
+                            </h5>
+                        )}
+                    </>
                 )}
             </div>
         </section>

@@ -25,7 +25,7 @@ class PictureController extends Controller
      */
     public function allPictures()
     {
-        $pictures = Picture::with('user')->get();
+        $pictures = Picture::with('user')->latest()->paginate(12);
 
         return response()->json($pictures);
     }
@@ -36,7 +36,7 @@ class PictureController extends Controller
      */
     public function picturesBySearch($searchKey)
     {
-        $pictures = Picture::where('title', 'LIKE', '%' . $searchKey . '%')->with('user')->get();
+        $pictures = Picture::where('title', 'LIKE', '%' . $searchKey . '%')->with('user')->latest()->paginate();
 
         return response()->json($pictures);
     }
