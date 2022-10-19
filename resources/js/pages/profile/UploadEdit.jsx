@@ -12,7 +12,7 @@ const UploadEdit = () => {
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
 
-    const selectedTagIds = [];
+    const [selectedTagIds, setSelectedTagIds] = useState([]);
 
     const [errors, setErrors] = useState({});
     const [isProcessing, setIsProcessing] = useState(false);
@@ -30,9 +30,13 @@ const UploadEdit = () => {
                     setPicture(res.data);
                     setSelectedTags(res.data.tags);
 
+                    const tags_arr = [];
                     res.data.tags.map((tag) => {
-                        selectedTagIds.push(tag.id);
+                        tags_arr.push(tag.id);
                     });
+                    setTimeout(() => {
+                        setSelectedTagIds(tags_arr);
+                    }, 500);
                 }
             })
             .catch((ex) => {
@@ -224,7 +228,6 @@ const UploadEdit = () => {
                                                 </div>
                                             )}
                                         </div>
-
                                         <div className="col-12">
                                             <label
                                                 htmlFor="tags"
@@ -232,18 +235,31 @@ const UploadEdit = () => {
                                             >
                                                 Tags
                                             </label>
-                                            <Multiselect
-                                                dataKey="id"
-                                                textField="name"
-                                                data={tags}
-                                                defaultValue={selectedTagIds}
-                                                placeholder="Select from list"
-                                                containerClassName="form-control p-1"
-                                                required
-                                                onChange={(value) =>
-                                                    setSelectedTags(value)
-                                                }
-                                            />
+                                            {selectedTagIds.length > 0 ? (
+                                                <Multiselect
+                                                    dataKey="id"
+                                                    textField="name"
+                                                    data={tags}
+                                                    defaultValue={
+                                                        selectedTagIds
+                                                    }
+                                                    placeholder="Select from list"
+                                                    containerClassName="form-control p-1"
+                                                    required
+                                                    onChange={(value) =>
+                                                        setSelectedTags(value)
+                                                    }
+                                                />
+                                            ) : (
+                                                <p class="placeholder-glow">
+                                                    <span
+                                                        class="placeholder col-12"
+                                                        style={{
+                                                            height: "40px",
+                                                        }}
+                                                    ></span>
+                                                </p>
+                                            )}
                                             {errors.tags && (
                                                 <div className="invalid-feedback d-block">
                                                     {errors.tags[0]}

@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/moveToTrash/{id}', [PictureController::class, 'moveToTrash']);
     Route::get('/getTrashedPictures', [PictureController::class, 'getTrashedPictures']);
     Route::get('/restoreTrashedPicture/{id}', [PictureController::class, 'restoreTrashedPicture']);
+    Route::delete('/deletePermanently/{id}', [PictureController::class, 'deletePermanently']);
 });
 
 

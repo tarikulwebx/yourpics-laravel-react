@@ -201,4 +201,29 @@ class PictureController extends Controller
 
         return response()->json("Your are not authorized!");
     }
+
+    /**
+     * Delete permanently
+     */
+    public function deletePermanently($id)
+    {
+        $picture = Picture::withTrashed()->findOrFail($id);
+        $user = auth()->user();
+
+        if ($picture->user_id === $user->id) {
+
+            // Image Deletion
+            $picture_url = $picture->image;
+            $exploded_array = explode('/', $picture_url);
+            $picture_name_only = $exploded_array[sizeof($exploded_array) - 1];
+            if (Storage::exists($picture_name_only)) {
+                Storage::delete($picture_name_only);
+            }
+
+            $picture->forceDelete();
+            return response()->json("Deleted successfully");
+        }
+
+        return response()->json("Your are not authorized!");
+    }
 }

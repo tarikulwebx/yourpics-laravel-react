@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import { Toast, ToastContainer } from "react-bootstrap";
+import { FaCheck, FaTrashAlt } from "react-icons/fa";
 import LoadingGrow from "../../components/loader/LoadingGrow";
 import "./Trash.scss";
 
 const Trash = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [pictures, setPictures] = useState([]);
+
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState(false);
 
     // load pictures
     const loadTrashedIPictures = () => {
@@ -37,12 +41,35 @@ const Trash = () => {
                 const newPictures = pictures.filter(
                     (picture) => picture.id !== id
                 );
+
+                setShowToast(true);
+                setToastMessage("Restored successfully");
                 setPictures(newPictures);
             })
             .catch((ex) => {
                 const res = ex.response;
                 console.log(res);
             });
+    };
+
+    // Delete picture permanently
+    const deletePicture = (id) => {
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            axios
+                .delete("/deletePermanently/" + id)
+                .then((res) => {
+                    const newPictures = pictures.filter(
+                        (picture) => picture.id !== id
+                    );
+                    setShowToast(true);
+                    setToastMessage("Deleted successfully");
+                    setPictures(newPictures);
+                })
+                .catch((ex) => {
+                    const res = console.log(ex.response);
+                    console.log(res);
+                });
+        });
     };
 
     return (
@@ -94,7 +121,14 @@ const Trash = () => {
                                                         >
                                                             Restore
                                                         </button>
-                                                        <button className="btn btn-sm btn-danger">
+                                                        <button
+                                                            onClick={() => {
+                                                                deletePicture(
+                                                                    picture.id
+                                                                );
+                                                            }}
+                                                            className="btn btn-sm btn-danger"
+                                                        >
                                                             Delete
                                                         </button>
                                                     </div>
@@ -109,6 +143,23 @@ const Trash = () => {
                                 Empty Trash
                             </h5>
                         )}
+
+                        <ToastContainer
+                            position="top-end"
+                            className="position-fixed p-3"
+                        >
+                            <Toast
+                                onClose={() => setShowToast(false)}
+                                autohide
+                                show={showToast}
+                                delay={2200}
+                                className="text-bg-success"
+                            >
+                                <Toast.Body>
+                                    <FaCheck className="me-1" /> {toastMessage}
+                                </Toast.Body>
+                            </Toast>
+                        </ToastContainer>
                     </>
                 )}
             </div>
