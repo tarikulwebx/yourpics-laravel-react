@@ -162,6 +162,20 @@ class PictureController extends Controller
     }
 
     /**
+     * Get picture by id
+     */
+    public function getPictureById($id)
+    {
+        $picture = Picture::findOrFail($id);
+        $picture->update([
+            'views' => $picture->views + 1,
+        ]);
+        $picture->user;
+        $picture->tags;
+        return response()->json($picture, 200,);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Picture  $picture

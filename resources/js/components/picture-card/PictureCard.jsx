@@ -4,10 +4,25 @@ import { FaRegHeart, FaHeart, FaMedal, FaEdit } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const PictureCard = ({ picture, isEditable = false }) => {
+const PictureCard = ({
+    picture,
+    isEditable = false,
+    setShowModal = false,
+    setModalPictureId = null,
+}) => {
+    const handleModal = (e) => {
+        e.preventDefault();
+        setModalPictureId(picture.id);
+        setShowModal(true);
+    };
+
     return (
         <div className="picture-card shadow-sm">
-            <a href="#" className="image-wrapper-link">
+            <a
+                onClick={(e) => handleModal(e)}
+                href="#"
+                className="image-wrapper-link"
+            >
                 <img className="img-fluid w-100" src={picture.image} alt="" />
             </a>
             <div className="card-hover-content p-2 d-flex flex-column text-white">
