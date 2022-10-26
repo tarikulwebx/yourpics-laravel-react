@@ -17,14 +17,12 @@ const PictureModal = ({ showModal, setShowModal, modalPictureId }) => {
     const [picture, setPicture] = useState({});
     const [tags, setTags] = useState([]);
     const [user, setUser] = useState({});
-    const [tooltipText, setTooltipText] = useState("Copy");
+    const [tooltipText, setTooltipText] = useState("  Copy  ");
 
     const handleClose = () => {
         setShowModal(false);
     };
-    const handleShow = () => {
-        setIsLoading(true);
-    };
+    const handleShow = () => {};
 
     // Get Modal Picture
     const getModalPicture = (id) => {
@@ -46,6 +44,7 @@ const PictureModal = ({ showModal, setShowModal, modalPictureId }) => {
 
     useEffect(() => {
         if (modalPictureId) {
+            setIsLoading(true);
             getModalPicture(modalPictureId);
         }
     }, [modalPictureId]);

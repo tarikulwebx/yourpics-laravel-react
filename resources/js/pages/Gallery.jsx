@@ -18,6 +18,7 @@ const Gallery = () => {
     const [totalPicture, setTotalPicture] = useState(0);
     const [nextPage, setNextPage] = useState(null);
 
+    // For modal
     const [showModal, setShowModal] = useState(false);
     const [modalPictureId, setModalPictureId] = useState(null);
 

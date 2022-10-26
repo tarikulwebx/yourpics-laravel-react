@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PicturePlaceholder from "../../components/loader/PicturePlaceholder";
+import PictureModal from "../../components/modals/PictureModal";
 import PictureCard from "../../components/picture-card/PictureCard";
 
 const Uploads = () => {
     const [pictures, setPictures] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    // for modal
+    const [showModal, setShowModal] = useState(false);
+    const [modalPictureId, setModalPictureId] = useState(null);
 
     useEffect(() => {
         axios
@@ -24,41 +29,56 @@ const Uploads = () => {
     }, []);
 
     return (
-        <div className="card shadow rounded-4 border-0">
-            <div className="card-header bg-white  rounded-3 py-3 px-4">
-                <h5 className="mb-0 text-dark">Your Uploads</h5>
+        <>
+            <div className="card shadow rounded-4 border-0">
+                <div className="card-header bg-white  rounded-3 py-3 px-4">
+                    <h5 className="mb-0 text-dark">Your Uploads</h5>
+                </div>
+                <div className="card-body p-4">
+                    {isLoading ? (
+                        <div className="row gy-4">
+                            {[...Array(8)].map((e, i) => (
+                                <div className="col-xl-3" key={i}>
+                                    <PicturePlaceholder />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <>
+                            {pictures.length > 0 ? (
+                                <div className="row g-4">
+                                    {pictures.map((picture, index) => (
+                                        <div
+                                            className="col-xl-3"
+                                            key={picture.id}
+                                        >
+                                            <PictureCard
+                                                picture={picture}
+                                                isEditable={true}
+                                                setShowModal={setShowModal}
+                                                setModalPictureId={
+                                                    setModalPictureId
+                                                }
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <h5 className="text-muted user-select-none text-center">
+                                    No pictures
+                                </h5>
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
-            <div className="card-body p-4">
-                {isLoading ? (
-                    <div className="row gy-4">
-                        {[...Array(8)].map((e, i) => (
-                            <div className="col-xl-3" key={i}>
-                                <PicturePlaceholder />
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <>
-                        {pictures.length > 0 ? (
-                            <div className="row g-4">
-                                {pictures.map((picture, index) => (
-                                    <div className="col-xl-3" key={picture.id}>
-                                        <PictureCard
-                                            picture={picture}
-                                            isEditable={true}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <h5 className="text-muted user-select-none text-center">
-                                No pictures
-                            </h5>
-                        )}
-                    </>
-                )}
-            </div>
-        </div>
+            {/* Picture Modal */}
+            <PictureModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                modalPictureId={modalPictureId}
+            />
+        </>
     );
 };
 

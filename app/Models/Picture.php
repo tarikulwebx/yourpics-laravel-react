@@ -68,6 +68,16 @@ class Picture extends Model
     }
 
     /**
+     * Created_at attribute formate
+     */
+    public function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->diffForHumans()
+        );
+    }
+
+    /**
      * Deleted-at attribute formate
      */
     protected function deletedAt(): Attribute
