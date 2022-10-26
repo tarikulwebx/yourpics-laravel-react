@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./PictureCard.scss";
 import { FaRegHeart, FaHeart, FaMedal, FaEdit } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { PictureModalContext } from "../../contexts/PictureModalContext";
 
-const PictureCard = ({
-    picture,
-    isEditable = false,
-    setShowModal = false,
-    setModalPictureId = null,
-}) => {
+const PictureCard = ({ picture, isEditable = false }) => {
+    const { setShowModal, setModalPictureId } = useContext(PictureModalContext);
+
     const handleModal = (e) => {
         e.preventDefault();
         setModalPictureId(picture.id);

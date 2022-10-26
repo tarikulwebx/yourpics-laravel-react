@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import {
     FaCheckCircle,
@@ -10,9 +10,13 @@ import {
     FaShare,
     FaShieldAlt,
 } from "react-icons/fa";
+import { PictureModalContext } from "../../contexts/PictureModalContext";
 import "./PictureModal.scss";
 
-const PictureModal = ({ showModal, setShowModal, modalPictureId }) => {
+const PictureModal = () => {
+    const { showModal, setShowModal, modalPictureId } =
+        useContext(PictureModalContext);
+
     const [isLoading, setIsLoading] = useState(true);
     const [picture, setPicture] = useState({});
     const [tags, setTags] = useState([]);

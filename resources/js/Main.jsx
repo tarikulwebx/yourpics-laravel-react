@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { PictureModalContext } from "./contexts/PictureModalContext";
 import { UserContext } from "./contexts/UserContext";
 import AppRoutes from "./routes/AppRoutes";
 
 const Main = () => {
+    // Login context states
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [user, setUser] = useState({});
+
+    // Picture modal context states
+    const [showModal, setShowModal] = useState(false);
+    const [modalPictureId, setModalPictureId] = useState(null);
 
     useEffect(() => {
         axios
@@ -32,7 +38,16 @@ const Main = () => {
             <UserContext.Provider
                 value={{ isLoggedIn, setIsLoggedIn, user, setUser }}
             >
-                <AppRoutes />
+                <PictureModalContext.Provider
+                    value={{
+                        showModal,
+                        setShowModal,
+                        modalPictureId,
+                        setModalPictureId,
+                    }}
+                >
+                    <AppRoutes />
+                </PictureModalContext.Provider>
             </UserContext.Provider>
         </BrowserRouter>
     );

@@ -7,10 +7,6 @@ const Uploads = () => {
     const [pictures, setPictures] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // for modal
-    const [showModal, setShowModal] = useState(false);
-    const [modalPictureId, setModalPictureId] = useState(null);
-
     useEffect(() => {
         axios
             .get("/getUploadedPictures")
@@ -55,10 +51,6 @@ const Uploads = () => {
                                             <PictureCard
                                                 picture={picture}
                                                 isEditable={true}
-                                                setShowModal={setShowModal}
-                                                setModalPictureId={
-                                                    setModalPictureId
-                                                }
                                             />
                                         </div>
                                     ))}
@@ -73,11 +65,7 @@ const Uploads = () => {
                 </div>
             </div>
             {/* Picture Modal */}
-            <PictureModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                modalPictureId={modalPictureId}
-            />
+            <PictureModal />
         </>
     );
 };

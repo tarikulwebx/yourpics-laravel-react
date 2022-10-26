@@ -18,10 +18,6 @@ const Gallery = () => {
     const [totalPicture, setTotalPicture] = useState(0);
     const [nextPage, setNextPage] = useState(null);
 
-    // For modal
-    const [showModal, setShowModal] = useState(false);
-    const [modalPictureId, setModalPictureId] = useState(null);
-
     // Load pictures
     const loadAllPictures = () => {
         axios
@@ -183,10 +179,6 @@ const Gallery = () => {
                                             >
                                                 <PictureCard
                                                     picture={picture}
-                                                    setShowModal={setShowModal}
-                                                    setModalPictureId={
-                                                        setModalPictureId
-                                                    }
                                                 />
                                             </div>
                                         ))}
@@ -203,11 +195,7 @@ const Gallery = () => {
             </section>
 
             {/* Picture Modal */}
-            <PictureModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                modalPictureId={modalPictureId}
-            />
+            <PictureModal />
         </>
     );
 };
