@@ -33,11 +33,20 @@ class User extends Authenticatable
         'rank',
     ];
 
-    // Picture relation
+    // has many Picture Model
     public function pictures()
     {
         return $this->hasMany(Picture::class);
     }
+
+
+    // has many favorites
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'user_id', 'id');
+    }
+
+
 
     /**
      * The attributes that should be hidden for serialization.

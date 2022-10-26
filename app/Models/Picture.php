@@ -39,6 +39,12 @@ class Picture extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    // has many favorites
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'picture_id', 'id');
+    }
+
 
     /**
      * Get the image url
