@@ -124,7 +124,7 @@ const PictureCard = ({ picture, isEditable = false }) => {
                 </div>
                 <div className="card-hover-content__footer d-flex align-items-center justify-content-between">
                     <div className="author d-flex align-items-center gap-2">
-                        <a href="#">
+                        <Link to={`/uploader/${picture.user.slug}`}>
                             <img
                                 src={
                                     picture.user.picture
@@ -135,17 +135,17 @@ const PictureCard = ({ picture, isEditable = false }) => {
                                 alt=""
                                 width={40}
                             />
-                        </a>
+                        </Link>
                         <div>
                             <h6 className="author__name mb-0 fw-semibold">
-                                <a
-                                    href="#"
+                                <Link
+                                    to={`/uploader/${picture.user.slug}`}
                                     className="text-decoration-none d-block text-truncate"
                                     style={{ width: "120px" }}
                                 >
                                     {picture.user.first_name}{" "}
                                     {picture.user.last_name}
-                                </a>
+                                </Link>
                             </h6>
                             <small className="author__rank d-block text-capitalize d-flex align-items-center">
                                 <FaMedal className="icon" />

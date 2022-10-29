@@ -176,7 +176,10 @@ const PictureModal = () => {
                         </>
                     ) : (
                         <>
-                            <a href="#" className="rounded-circle">
+                            <Link
+                                to={`/uploader/${user.slug}`}
+                                className="rounded-circle"
+                            >
                                 <img
                                     src={
                                         user.picture
@@ -187,15 +190,15 @@ const PictureModal = () => {
                                     className="rounded-circle user-picture"
                                     width={40}
                                 />
-                            </a>
+                            </Link>
                             <div>
                                 <h6 className="mb-0">
-                                    <a
-                                        href="#"
+                                    <Link
+                                        to={`/uploader/${user.slug}`}
                                         className="text-decoration-none"
                                     >
                                         {user.first_name + " " + user.last_name}
-                                    </a>
+                                    </Link>
                                 </h6>
                                 <small className="mb-0 d-flex align-items-center gap-1 text-muted text-capitalize">
                                     <FaMedal className="text-secondary" />{" "}

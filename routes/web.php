@@ -4,6 +4,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UploaderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ Route::get("/download/{slug}", [PictureController::class, 'download']);
 // Favorite routes
 Route::get("/getFavoritesCount/{id}", [FavoriteController::class, 'getFavoritesCount']);
 
+
 // Auth
 Route::middleware(['auth'])->group(function () {
     Route::post('/pictureStore', [PictureController::class, 'store']);
@@ -68,6 +70,11 @@ Route::get('getUser', [UserController::class, "get_user"]);
 Route::middleware(['auth'])->group(function () {
     Route::post('profile/update', [ProfileController::class, 'updateProfile']);
 });
+
+
+// Uploader routes
+Route::get('/getUploaderBySlug/{slug}', [UploaderController::class, 'getUploaderBySlug']);
+Route::get('/getPicturesByUploaderSlug/{slug}', [UploaderController::class, 'getPicturesByUploaderSlug']);
 
 
 // SPA Route
