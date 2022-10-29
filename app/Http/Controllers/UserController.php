@@ -12,7 +12,6 @@ class UserController extends Controller
     public function get_user()
     {
         $user = Auth::user();
-        $user['favorites'] = auth()->user()->favorites()->pluck("picture_id");
 
         return response()->json($user);
     }

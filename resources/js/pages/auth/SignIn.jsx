@@ -9,8 +9,22 @@ const SignIn = () => {
 
     const navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn, user, setUser } =
-        useContext(UserContext);
+    const { setIsLoggedIn, setUser, setFavorites } = useContext(UserContext);
+
+    // Get user favorites
+    const getFavoritesArray = () => {
+        axios
+            .get("/getFavoritesArray")
+            .then((res) => {
+                if (res.status === 200) {
+                    setFavorites(res.data);
+                }
+            })
+            .cath((ex) => {
+                const res = ex.response;
+                console.log(res);
+            });
+    };
 
     // Get Signed In User info
     const getLoggedInUser = () => {
@@ -21,6 +35,7 @@ const SignIn = () => {
                 if (Object.keys(res.data).length > 0) {
                     setIsLoggedIn(true);
                     setUser(res.data);
+                    getFavoritesArray();
                 } else {
                     setIsLoggedIn(false);
                     setUser({});

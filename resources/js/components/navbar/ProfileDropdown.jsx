@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
 const ProfileDropdown = ({ user }) => {
-    const { setIsLoggedIn, setUser } = useContext(UserContext);
+    const { setIsLoggedIn, setUser, setFavorites } = useContext(UserContext);
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -17,6 +17,7 @@ const ProfileDropdown = ({ user }) => {
                 .then((res) => {
                     setIsLoggedIn(false);
                     setUser([]);
+                    setFavorites([]);
                 })
                 .catch((ex) => {
                     console.log(ex);

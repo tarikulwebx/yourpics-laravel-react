@@ -23,7 +23,7 @@ class FavoriteController extends Controller
      */
     public function getFavorites()
     {
-        $favorites = auth()->user()->favorites()->pluck('picture_id')->all();
+        $favorites = auth()->user()->favorites()->pluck('picture_id');
         $pictures = Picture::with('user')->whereHas('favorites', function ($query) use ($favorites) {
             $query->whereIn('favorites.picture_id', $favorites);
         })->get();
