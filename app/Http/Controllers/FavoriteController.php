@@ -58,4 +58,15 @@ class FavoriteController extends Controller
         $picture->favorites()->where('user_id', '=', $user['id'])->delete();
         return response()->json(['message' => 'Removed from favorite list'], 200,);
     }
+
+
+    /**
+     * get favorites count
+     */
+    public function getFavoritesCount($id)
+    {
+        $picture = Picture::findOrFail($id);
+        $favorite_count = $picture->favorites()->count();
+        return response()->json($favorite_count, 200,);
+    }
 }

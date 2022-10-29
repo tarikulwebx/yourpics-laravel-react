@@ -3,6 +3,7 @@ import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import {
     FaCheckCircle,
     FaDownload,
+    FaHeart,
     FaLongArrowAltRight,
     FaMedal,
     FaRegCalendarAlt,
@@ -11,11 +12,20 @@ import {
     FaShieldAlt,
 } from "react-icons/fa";
 import { PictureModalContext } from "../../contexts/PictureModalContext";
+import { ToastContext } from "../../contexts/ToastContext";
+import { UserContext } from "../../contexts/UserContext";
 import "./PictureModal.scss";
 
 const PictureModal = () => {
     const { showModal, setShowModal, modalPictureId } =
         useContext(PictureModalContext);
+
+    const { setShowToast, setToastMessage, setToastType } =
+        useContext(ToastContext);
+    const { favorites, setFavorites } = useContext(UserContext);
+    const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
+    const [favoritesCount, setFavoritesCount] = useState(null);
+    const [isFavoritesCountLoaded, setIsFavoritesCountLoaded] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
     const [picture, setPicture] = useState({});
@@ -50,6 +60,8 @@ const PictureModal = () => {
         if (modalPictureId) {
             setIsLoading(true);
             getModalPicture(modalPictureId);
+            setIsFavoritesCountLoaded(false);
+            getFavoritesCount(modalPictureId);
         }
     }, [modalPictureId]);
 
@@ -60,6 +72,67 @@ const PictureModal = () => {
         setTimeout(() => {
             setTooltipText("Copy");
         }, 1500);
+    };
+
+    // add to favorite
+    const addToFavorite = (id) => {
+        setIsFavoriteLoading(true);
+        axios
+            .get("/addToFavorite/" + id)
+            .then((res) => {
+                if (res.status === 200) {
+                    setToastMessage(res.data.message);
+                    setToastType("success");
+                    setShowToast(true);
+                    setFavorites([...favorites, id]);
+                }
+                setIsFavoriteLoading(false);
+            })
+            .catch((ex) => {
+                const res = ex.response;
+                if (res.status === 401) {
+                    setToastMessage("Login required!");
+                    setToastType("warning");
+                    setShowToast(true);
+                }
+                setIsFavoriteLoading(false);
+            });
+    };
+
+    // remove from favorite
+    const removeFromFavorite = (id) => {
+        setIsFavoriteLoading(true);
+        axios
+            .get("/removeFromFavorite/" + id)
+            .then((res) => {
+                setFavorites((prevState) =>
+                    prevState.filter((prevItem) => prevItem !== id)
+                );
+                setToastMessage(res.data.message);
+                setToastType("success");
+                setShowToast(true);
+                setIsFavoriteLoading(false);
+            })
+            .catch((ex) => {
+                const res = ex.response;
+                setToastMessage("Error occurred!");
+                setToastType("danger");
+                setShowToast(true);
+                setIsFavoriteLoading(false);
+            });
+    };
+
+    // Get favorites count
+    const getFavoritesCount = (id) => {
+        axios
+            .get("/getFavoritesCount/" + id)
+            .then((res) => {
+                setFavoritesCount(res.data);
+                setIsFavoritesCountLoaded(true);
+            })
+            .catch((ex) => {
+                console.log(ex);
+            });
     };
 
     return (
@@ -162,9 +235,23 @@ const PictureModal = () => {
                         </>
                     ) : (
                         <>
-                            <button className="btn btn-sm btn-outline-secondary">
-                                <FaRegHeart className="fs-6" />
-                            </button>
+                            {favorites.includes(picture.id) ? (
+                                <button
+                                    onClick={() =>
+                                        removeFromFavorite(picture.id)
+                                    }
+                                    className="btn btn-sm btn-outline-secondary"
+                                >
+                                    <FaHeart className="fs-6" />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => addToFavorite(picture.id)}
+                                    className="btn btn-sm btn-outline-secondary"
+                                >
+                                    <FaRegHeart className="fs-6" />
+                                </button>
+                            )}
                             <a
                                 href={"/download/" + picture.slug}
                                 className="btn btn-sm btn-primary d-sm-flex align-items-md-center gap-sm-2"
@@ -305,7 +392,9 @@ const PictureModal = () => {
                                                 Favorite
                                             </p>
                                             <p className="mb-0 small text-muted">
-                                                1,335
+                                                {isFavoritesCountLoaded
+                                                    ? favoritesCount
+                                                    : "..."}
                                             </p>
                                         </div>
                                     </div>

@@ -37,6 +37,10 @@ Route::get('/getPictureBySlug/{slug}', [PictureController::class, 'getPictureByS
 Route::get('/getPictureById/{id}', [PictureController::class, 'getPictureById']);
 Route::get("/download/{slug}", [PictureController::class, 'download']);
 
+// Favorite routes
+Route::get("/getFavoritesCount/{id}", [FavoriteController::class, 'getFavoritesCount']);
+
+// Auth
 Route::middleware(['auth'])->group(function () {
     Route::post('/pictureStore', [PictureController::class, 'store']);
     Route::get('/getUploadedPictures', [PictureController::class, 'getUploadedPictures']);
@@ -46,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/restoreTrashedPicture/{id}', [PictureController::class, 'restoreTrashedPicture']);
     Route::delete('/deletePermanently/{id}', [PictureController::class, 'deletePermanently']);
 
+    // favorite routes
     Route::get('/addToFavorite/{id}', [FavoriteController::class, 'addToFavorite']);
     Route::get('/getFavoritesArray', [FavoriteController::class, 'getFavoritesArray']);
     Route::get('/getFavorites', [FavoriteController::class, 'getFavorites']);
