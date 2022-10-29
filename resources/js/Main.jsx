@@ -50,6 +50,7 @@ const Main = () => {
                 } else {
                     setIsLoggedIn(false);
                     setUser({});
+                    setFavorites([]);
                 }
             })
             .catch((ex) => {

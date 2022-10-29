@@ -17,7 +17,7 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
 
 const ProfileNavigation = () => {
-    const { setIsLoggedIn, setUser } = useContext(UserContext);
+    const { setIsLoggedIn, setUser, setFavorites } = useContext(UserContext);
 
     const logoutHandle = () => {
         axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -26,6 +26,7 @@ const ProfileNavigation = () => {
                 .then((res) => {
                     setIsLoggedIn(false);
                     setUser([]);
+                    setFavorites([]);
                 })
                 .catch((ex) => {
                     console.log(ex);
