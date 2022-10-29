@@ -10,12 +10,24 @@ class FavoriteController extends Controller
 {
 
     /**
-     * Get Favorites
+     * Get Favorites Array
      */
     public function getFavoritesArray()
     {
         $favorites = auth()->user()->favorites()->pluck('picture_id');
         return response()->json($favorites, 200,);
+    }
+
+    /**
+     * Get Favorites
+     */
+    public function getFavorites()
+    {
+        $favorites = auth()->user()->favorites()->pluck('picture_id')->all();
+        $pictures = Picture::with('user')->whereHas('favorites', function ($query) use ($favorites) {
+            $query->whereIn('favorites.picture_id', $favorites);
+        })->get();
+        return response()->json($pictures, 200,);
     }
 
 

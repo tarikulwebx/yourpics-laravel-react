@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/addToFavorite/{id}', [FavoriteController::class, 'addToFavorite']);
     Route::get('/getFavoritesArray', [FavoriteController::class, 'getFavoritesArray']);
+    Route::get('/getFavorites', [FavoriteController::class, 'getFavorites']);
     Route::get('/removeFromFavorite/{id}', [FavoriteController::class, 'removeFromFavorite']);
 });
 
