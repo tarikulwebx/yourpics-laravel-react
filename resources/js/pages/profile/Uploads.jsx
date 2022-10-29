@@ -64,8 +64,6 @@ const Uploads = () => {
                     )}
                 </div>
             </div>
-            {/* Picture Modal */}
-            <PictureModal />
         </>
     );
 };

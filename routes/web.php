@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
@@ -44,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getTrashedPictures', [PictureController::class, 'getTrashedPictures']);
     Route::get('/restoreTrashedPicture/{id}', [PictureController::class, 'restoreTrashedPicture']);
     Route::delete('/deletePermanently/{id}', [PictureController::class, 'deletePermanently']);
+
+    Route::get('/addToFavorite/{id}', [FavoriteController::class, 'addToFavorite']);
+    Route::get('/getFavoritesArray', [FavoriteController::class, 'getFavoritesArray']);
+    Route::get('/removeFromFavorite/{id}', [FavoriteController::class, 'removeFromFavorite']);
 });
 
 

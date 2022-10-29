@@ -7,6 +7,7 @@ import LoadingGrow from "../components/loader/LoadingGrow";
 import PicturePlaceholder from "../components/loader/PicturePlaceholder";
 import PictureModal from "../components/modals/PictureModal";
 import PictureCard from "../components/picture-card/PictureCard";
+import ToastMessage from "../components/toast/ToastMessage";
 import "./Gallery.scss";
 
 const Gallery = () => {
@@ -193,9 +194,6 @@ const Gallery = () => {
                     )}
                 </div>
             </section>
-
-            {/* Picture Modal */}
-            <PictureModal />
         </>
     );
 };
