@@ -13,7 +13,7 @@ const FooterTop = () => {
                             <div className="d-flex align-items-center gap-2 mb-2 pb-1">
                                 <img
                                     className="site-info__logo"
-                                    src="assets/images/logo.png"
+                                    src="/assets/images/logo.png"
                                     alt="logo"
                                 />
                                 <h3 className="site-info__name mb-0">

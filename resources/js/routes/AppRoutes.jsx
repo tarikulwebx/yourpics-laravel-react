@@ -18,6 +18,8 @@ import Trash from "../pages/profile/Trash";
 import Upload from "../pages/profile/Upload";
 import UploadEdit from "../pages/profile/UploadEdit";
 import Uploads from "../pages/profile/Uploads";
+import Tag from "../pages/tag/Tag";
+import Tags from "../pages/tags/Tags";
 import PublicApp from "../PublicApp";
 import Protected from "./Protected";
 import UnProtected from "./UnProtected";
@@ -31,6 +33,8 @@ const AppRoutes = () => {
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
+                <Route path="tags" element={<Tags />} />
+                <Route path="tags/:slug" element={<Tag />} />
 
                 {/* Auth Routes */}
                 <Route

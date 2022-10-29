@@ -11,6 +11,7 @@ import {
     FaShare,
     FaShieldAlt,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { PictureModalContext } from "../../contexts/PictureModalContext";
 import { ToastContext } from "../../contexts/ToastContext";
 import { UserContext } from "../../contexts/UserContext";
@@ -468,14 +469,14 @@ const PictureModal = () => {
                         <div className="col-12">
                             <div className="picture-tags d-flex flex-wrap gap-2">
                                 {tags.map((tag, index) => (
-                                    <a
+                                    <Link
                                         className="badge rounded-pill text-bg-primary bg-opacity-10 text-primary"
-                                        href="#"
+                                        to={"/tags/" + tag.slug}
                                         role="button"
                                         key={tag.id}
                                     >
                                         {tag.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
