@@ -69,4 +69,14 @@ class FavoriteController extends Controller
         $favorite_count = $picture->favorites()->count();
         return response()->json($favorite_count, 200,);
     }
+
+
+    /**
+     * 
+     */
+    public function getFavoritesCountByPictureSlug($slug)
+    {
+        $fav_count = Picture::findBySlugOrFail($slug)->favorites()->count();
+        return response()->json($fav_count, 200,);
+    }
 }

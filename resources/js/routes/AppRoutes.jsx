@@ -10,6 +10,7 @@ import SignUp from "../pages/auth/SignUp";
 import Contact from "../pages/Contact";
 import Gallery from "../pages/Gallery";
 import Home from "../pages/Home";
+import Picture from "../pages/picture/Picture";
 import Dashboard from "../pages/profile/Dashboard";
 import EditProfile from "../pages/profile/EditProfile";
 import Favorites from "../pages/profile/Favorites";
@@ -37,6 +38,7 @@ const AppRoutes = () => {
                 <Route path="tags" element={<Tags />} />
                 <Route path="tags/:slug" element={<Tag />} />
                 <Route path="uploader/:slug" element={<Uploader />} />
+                <Route path="picture/:slug" element={<Picture />} />
 
                 {/* Auth Routes */}
                 <Route

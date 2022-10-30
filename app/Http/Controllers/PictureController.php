@@ -159,6 +159,7 @@ class PictureController extends Controller
     {
         $picture = Picture::findBySlugOrFail($slug);
         $picture->tags;
+        $picture->user;
         return response()->json($picture, 200,);
     }
 

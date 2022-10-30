@@ -24,6 +24,7 @@ const PictureModal = () => {
     const { setShowToast, setToastMessage, setToastType } =
         useContext(ToastContext);
     const { favorites, setFavorites } = useContext(UserContext);
+
     const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
     const [favoritesCount, setFavoritesCount] = useState(null);
     const [isFavoritesCountLoaded, setIsFavoritesCountLoaded] = useState(false);
@@ -179,6 +180,7 @@ const PictureModal = () => {
                             <Link
                                 to={`/uploader/${user.slug}`}
                                 className="rounded-circle"
+                                onClick={handleClose}
                             >
                                 <img
                                     src={
@@ -196,6 +198,7 @@ const PictureModal = () => {
                                     <Link
                                         to={`/uploader/${user.slug}`}
                                         className="text-decoration-none"
+                                        onClick={handleClose}
                                     >
                                         {user.first_name + " " + user.last_name}
                                     </Link>
@@ -361,7 +364,7 @@ const PictureModal = () => {
                     </div>
                 ) : (
                     <div className="row gy-4">
-                        <div className="col-12 col-xl-8">
+                        <div className="col-12 col-xl-8 text-center">
                             <img
                                 src={picture.image}
                                 alt={picture.title}
@@ -430,7 +433,7 @@ const PictureModal = () => {
                                             className=" btn btn-sm btn-outline-secondary me-2"
                                             onClick={() =>
                                                 copyToClipboard(
-                                                    "www.google.com"
+                                                    `${window.location.origin}/picture/${picture.slug}`
                                                 )
                                             }
                                         >
@@ -439,23 +442,14 @@ const PictureModal = () => {
                                         </button>
                                     </OverlayTrigger>
 
-                                    {/* <button
-                                        className="copyToClipboard btn btn-sm btn-outline-secondary me-2"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Copy Link"
-                                        data-link="www.google.com"
-                                    >
-                                        <FaShare className="me-1" />
-                                        Share
-                                    </button> */}
-                                    <a
-                                        href="single.html"
+                                    <Link
+                                        to={`/picture/${picture.slug}`}
                                         className="btn btn-sm btn-primary"
+                                        onClick={handleClose}
                                     >
                                         View in Page
                                         <FaLongArrowAltRight className="ms-1" />
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -477,6 +471,7 @@ const PictureModal = () => {
                                         to={"/tags/" + tag.slug}
                                         role="button"
                                         key={tag.id}
+                                        onClick={handleClose}
                                     >
                                         {tag.name}
                                     </Link>

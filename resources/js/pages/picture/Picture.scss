@@ -1,0 +1,42 @@
+@use "../../../sass/variables" as *;
+
+.single-picture-page {
+    .description {
+        color: $gray-800;
+    }
+
+    .picture-tags {
+        a {
+            text-decoration: none;
+            padding: 0.35rem 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+
+            &:hover {
+                background-color: $primary !important;
+                color: $white !important;
+            }
+        }
+    }
+
+    .picturePlaceholder {
+        background-image: url("/assets/images/placeholder.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .userPicturePlaceholder {
+        background-image: url("/assets/images/profile-placeholder.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .user-picture {
+        width: 40px;
+        height: 40px;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+}

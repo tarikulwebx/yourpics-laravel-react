@@ -2,4 +2,11 @@
     .infinite-scroll-component {
         overflow: hidden !important;
     }
+
+    .picturePlaceholder {
+        background-image: url("/assets/images/profile-placeholder.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
 }

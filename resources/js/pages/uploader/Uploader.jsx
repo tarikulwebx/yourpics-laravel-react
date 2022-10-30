@@ -23,10 +23,13 @@ const Uploader = () => {
             .get("/getUploaderBySlug/" + slug)
             .then((res) => {
                 setUploader(res.data);
-                setIsLoadingUploader(false);
+                setTimeout(() => {
+                    setIsLoadingUploader(false);
+                }, 1500);
             })
             .catch((ex) => {
                 console.log(ex);
+                setIsLoadingUploader(false);
             });
     };
 
@@ -74,46 +77,83 @@ const Uploader = () => {
                 {/* Head */}
                 <div className="card mt-3 mb-4  shadow-sm border-0 rounded-5">
                     <div className="card-body">
-                        <div className="row align-items-center gy-4">
-                            <div className="col-sm-4 col-xl-3">
-                                <img
-                                    src={
-                                        uploader.picture
-                                            ? uploader.picture
-                                            : "/assets/images/profile-placeholder.jpg"
-                                    }
-                                    className="img-fluid w-100 rounded-circle"
-                                    alt={uploader.first_name}
-                                />
+                        {/* loader */}
+                        {isLoadingUploader ? (
+                            <div className="row align-items-center gy-4">
+                                <div className="col-sm-4 col-xl-3">
+                                    <div className="placeholder-glow">
+                                        <img
+                                            src="/assets/images/profile-placeholder.jpg"
+                                            className="img-fluid rounded-circle placeholder w-100"
+                                            alt="profile picture"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-sm-8 col-xl-9">
+                                    <div className="placeholder-glow">
+                                        <h2
+                                            className="placeholder w-100"
+                                            style={{ maxWidth: "400px" }}
+                                        ></h2>
+                                    </div>
+                                    <div className="placeholder-glow mb-2">
+                                        <p
+                                            className="placeholder w-100 "
+                                            style={{ maxWidth: "200px" }}
+                                        ></p>
+                                    </div>
+                                    <div className="placeholder-glow">
+                                        <p className="placeholder w-100"></p>
+                                        <p className="placeholder w-100"></p>
+                                        <h5
+                                            className="text-secondary d-inline-block mt-2 placeholder w-100 fw-semibold"
+                                            style={{ maxWidth: "100px" }}
+                                        ></h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="col-sm-8 col-xl-9">
-                                <h2 className="fw-bold mb-0">
-                                    {uploader.first_name +
-                                        " " +
-                                        uploader.last_name}
-                                </h2>
-                                <p className="fw-semibold">
-                                    <a
-                                        href={`mailto:${uploader.email}`}
-                                        className="text-decoration-none"
-                                    >
-                                        {uploader.email}
-                                    </a>
-                                </p>
-                                {uploader.description ? (
-                                    <p className="lead fw-normal text-muted">
-                                        {uploader.description}
+                        ) : (
+                            <div className="row align-items-center gy-4">
+                                <div className="col-sm-4 col-xl-3">
+                                    <img
+                                        src={
+                                            uploader.picture
+                                                ? uploader.picture
+                                                : "/assets/images/profile-placeholder.jpg"
+                                        }
+                                        className="img-fluid w-100 rounded-circle bg-dark bg-opacity-10"
+                                        alt={uploader.first_name}
+                                    />
+                                </div>
+                                <div className="col-sm-8 col-xl-9">
+                                    <h2 className="fw-bold mb-0">
+                                        {uploader.first_name +
+                                            " " +
+                                            uploader.last_name}
+                                    </h2>
+                                    <p className="fw-semibold">
+                                        <a
+                                            href={`mailto:${uploader.email}`}
+                                            className="text-decoration-none"
+                                        >
+                                            {uploader.email}
+                                        </a>
                                     </p>
-                                ) : (
-                                    <p className="lead fw-normal text-muted user-select-none">
-                                        [No description written]
-                                    </p>
-                                )}
-                                <h5 className="text-secondary fw-semibold d-flex align-items-center gap-1">
-                                    <BsImages /> {totalPicture}
-                                </h5>
+                                    {uploader.description ? (
+                                        <p className="lead fw-normal text-muted">
+                                            {uploader.description}
+                                        </p>
+                                    ) : (
+                                        <p className="lead fw-normal text-muted user-select-none">
+                                            [No description written]
+                                        </p>
+                                    )}
+                                    <h5 className="text-secondary fw-semibold d-flex align-items-center gap-1">
+                                        <BsImages /> {totalPicture}
+                                    </h5>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
 

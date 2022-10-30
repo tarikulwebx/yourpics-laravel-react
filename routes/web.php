@@ -42,6 +42,7 @@ Route::get("/download/{slug}", [PictureController::class, 'download']);
 
 // Favorite routes
 Route::get("/getFavoritesCount/{id}", [FavoriteController::class, 'getFavoritesCount']);
+Route::get("/getFavoritesCountByPictureSlug/{slug}", [FavoriteController::class, 'getFavoritesCountByPictureSlug']);
 
 
 // Auth
