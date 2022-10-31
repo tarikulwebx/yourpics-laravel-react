@@ -1,0 +1,27 @@
+@use "../../../../sass/variables" as *;
+
+.admin-sidebar {
+    .brand {
+        img {width: 30px; height: auto;}
+    }
+    .main-nav {
+        .nav-item {
+            .nav-link {
+                color: $gray-300;
+
+                .icon {
+                    font-size: 1.25rem;
+                }
+               
+                &:hover,
+                &.active {
+                    color: $white;
+                }
+
+                @media only screen and (max-width: "576px") {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+}
