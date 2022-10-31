@@ -12,6 +12,8 @@ import {
 import { FiChevronDown, FiSettings } from "react-icons/fi";
 import "./Sidebar.scss";
 import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../../contexts/UserContext";
 
 const menuItems = [
     {
@@ -27,6 +29,25 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
+    const { user, setIsLoggedIn, setIsAdmin, setUser, setFavorites } =
+        useContext(UserContext);
+
+    const handleSignOut = (e) => {
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            axios
+                .post("/logout")
+                .then((res) => {
+                    setIsLoggedIn(false);
+                    setIsAdmin(false);
+                    setUser([]);
+                    setFavorites([]);
+                })
+                .catch((ex) => {
+                    console.log(ex);
+                });
+        });
+    };
+
     return (
         <div className="d-flex flex-column align-items-center align-items-sm-start pt-2 text-white min-vh-100 admin-sidebar">
             <a
@@ -61,7 +82,7 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
-            <div className="dropdown pb-4 mt-auto">
+            <div className="dropdown pb-4 mt-auto admin-profile-dropdown">
                 <a
                     href="#"
                     className="d-flex px-2 align-items-center text-white text-decoration-none dropdown-toggle"
@@ -70,40 +91,43 @@ const Sidebar = () => {
                     aria-expanded="false"
                 >
                     <img
-                        src="https://github.com/mdo.png"
+                        src={
+                            user.picture
+                                ? user.picture
+                                : "/assets/images/profile-placeholder.jpg"
+                        }
                         alt="hugenerd"
                         width="30"
                         height="30"
                         className="rounded-circle"
                     />
-                    <span className="d-none d-sm-inline mx-1">loser</span>
+                    <span
+                        className="d-none d-sm-inline-block ms-2 me-1 text-truncate"
+                        style={{ maxWidth: "80px" }}
+                    >
+                        {user.first_name}
+                    </span>
                 </a>
                 <ul
                     className="dropdown-menu dropdown-menu-dark text-small shadow"
                     aria-labelledby="dropdownUser1"
                 >
                     <li>
-                        <a className="dropdown-item" href="#">
-                            New project...
-                        </a>
-                    </li>
-                    <li>
-                        <a className="dropdown-item" href="#">
-                            Settings
-                        </a>
-                    </li>
-                    <li>
-                        <a className="dropdown-item" href="#">
+                        <Link to="/profile" className="dropdown-item">
                             Profile
-                        </a>
+                        </Link>
                     </li>
+
                     <li>
                         <hr className="dropdown-divider" />
                     </li>
                     <li>
-                        <a className="dropdown-item" href="#">
+                        <button
+                            onClick={handleSignOut}
+                            className="dropdown-item"
+                        >
                             Sign out
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </div>

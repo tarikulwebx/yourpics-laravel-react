@@ -24,4 +24,13 @@
             }
         }
     }
+
+    .admin-profile-dropdown {
+        .dropdown-toggle::after {
+            
+            @media only screen and (max-width: "576px") {
+                display: none;
+            }
+        }
+    }
 }
