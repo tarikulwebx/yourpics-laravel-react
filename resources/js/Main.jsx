@@ -11,6 +11,7 @@ import AppRoutes from "./routes/AppRoutes";
 const Main = () => {
     // Login context states
     const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(null);
     const [user, setUser] = useState({});
     const [favorites, setFavorites] = useState([]);
 
@@ -42,13 +43,18 @@ const Main = () => {
         axios
             .get("/getUser")
             .then((res) => {
-                // console.log(res);
                 if (Object.keys(res.data).length > 0) {
                     setIsLoggedIn(true);
+                    if (res.data.is_admin) {
+                        setIsAdmin(true);
+                    } else {
+                        setIsAdmin(false);
+                    }
                     setUser(res.data);
                     getFavoritesArray();
                 } else {
                     setIsLoggedIn(false);
+                    setIsAdmin(false);
                     setUser({});
                     setFavorites([]);
                 }
@@ -65,6 +71,8 @@ const Main = () => {
                 value={{
                     isLoggedIn,
                     setIsLoggedIn,
+                    isAdmin,
+                    setIsAdmin,
                     user,
                     setUser,
                     favorites,

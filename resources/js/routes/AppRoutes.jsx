@@ -29,9 +29,10 @@ import UnProtected from "./UnProtected";
 // Admin components
 import AdminDashboard from "../admin/pages/dashboard/Dashboard";
 import Settings from "../admin/pages/settings/Settings";
+import ProtectedAdmin from "./ProtectedAdmin";
 
 const AppRoutes = () => {
-    const { isLoggedIn, user } = useContext(UserContext);
+    const { isLoggedIn, isAdmin, user } = useContext(UserContext);
     return (
         <Routes>
             <Route path="/" element={<PublicApp />}>
@@ -91,7 +92,14 @@ const AppRoutes = () => {
             </Route>
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<AdminApp />}>
+            <Route
+                path="/admin"
+                element={
+                    <ProtectedAdmin isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+                        <AdminApp />
+                    </ProtectedAdmin>
+                }
+            >
                 <Route index element={<AdminDashboard />} />
                 <Route path="settings" element={<Settings />} />
             </Route>

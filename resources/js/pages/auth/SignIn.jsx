@@ -9,7 +9,8 @@ const SignIn = () => {
 
     const navigate = useNavigate();
 
-    const { setIsLoggedIn, setUser, setFavorites } = useContext(UserContext);
+    const { setIsLoggedIn, setIsAdmin, setUser, setFavorites } =
+        useContext(UserContext);
 
     // Get user favorites
     const getFavoritesArray = () => {
@@ -34,10 +35,16 @@ const SignIn = () => {
                 // console.log(res);
                 if (Object.keys(res.data).length > 0) {
                     setIsLoggedIn(true);
+                    if (res.data.is_admin) {
+                        setIsAdmin(true);
+                    } else {
+                        setIsAdmin(false);
+                    }
                     setUser(res.data);
                     getFavoritesArray();
                 } else {
                     setIsLoggedIn(false);
+                    setIsAdmin(false);
                     setUser({});
                 }
             })
