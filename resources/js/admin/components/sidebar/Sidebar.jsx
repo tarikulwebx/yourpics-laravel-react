@@ -6,6 +6,7 @@ import {
     FaCog,
     FaHome,
     FaTachometerAlt,
+    FaTags,
     FaUsers,
     FaUsersCog,
 } from "react-icons/fa";
@@ -21,6 +22,12 @@ const menuItems = [
         link: "/admin",
         icon: <FaTachometerAlt className="icon" />,
     },
+    {
+        name: "Tags",
+        link: "/admin/tags",
+        icon: <FaTags className="icon" />,
+    },
+
     {
         name: "Settings",
         link: "/admin/settings",
@@ -64,7 +71,7 @@ const Sidebar = () => {
             </div>
 
             <ul
-                className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100 main-nav"
+                className="nav nav-pills flex-column  mb-0 align-items-center align-items-sm-start w-100 main-nav"
                 id="menu"
             >
                 {menuItems.map((menu, index) => (
@@ -82,7 +89,10 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
-            <div className="dropdown pb-4 mt-auto admin-profile-dropdown">
+            <div className="px-2 w-100 mt-auto">
+                <hr className="w-100" />
+            </div>
+            <div className="dropdown pb-3  admin-profile-dropdown">
                 <a
                     href="#"
                     className="d-flex px-2 align-items-center text-white text-decoration-none dropdown-toggle"

@@ -12,7 +12,7 @@ const Dashboard = () => {
     return (
         <>
             {/* Heading */}
-            <div className="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3 text-primary">
+            <div className="d-flex align-items-center justify-content-between mb-3 pb-1 text-primary">
                 <h4 className="mb-0">Dashboard</h4>
                 <div>
                     <Link to="/">

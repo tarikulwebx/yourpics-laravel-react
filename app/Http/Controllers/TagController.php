@@ -9,7 +9,27 @@ class TagController extends Controller
 {
     public function getAllTags()
     {
-        $tags = Tag::withCount('pictures')->orderBy('name')->get();
+        $tags = Tag::withCount('pictures')->orderBy('name')->withCount('pictures')->get();
+        return response()->json($tags, 200,);
+    }
+
+    /**
+     * get tags with pagination
+     */
+    public function getTagsWithPagination()
+    {
+        $tags = Tag::withCount('pictures')->orderBy('name')->withCount('pictures')->paginate(5);
+        return response()->json($tags, 200,);
+    }
+
+    /**
+     * get tags by search
+     */
+    public function getTagsBySearch($searchText)
+    {
+        $tags = Tag::withCount('pictures')->where(function ($query) use ($searchText) {
+            $query->where('name', 'LIKE', '%' . $searchText . '%');
+        })->orderBy('name')->withCount('pictures')->paginate(5);
         return response()->json($tags, 200,);
     }
 
@@ -31,5 +51,57 @@ class TagController extends Controller
     {
         $pictures = Tag::findBySlugOrFail($slug)->pictures()->with('user')->latest()->paginate(12);
         return response()->json($pictures, 200,);
+    }
+
+
+    /**
+     * store tag
+     */
+    public function storeTag(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $inputs = $request->all();
+
+        Tag::create([
+            "name" => $inputs['name'],
+        ]);
+
+        return response()->json($inputs, 200,);
+    }
+
+    /**
+     * delete tag
+     */
+    public function deleteTag($id)
+    {
+        $tag = Tag::findOrFail($id);
+        $tag->delete();
+
+        return
+            response()->json("Deleted successfully", 200,);
+    }
+
+
+    /**
+     * update tag
+     */
+    public function updateTag(Request $request, $id)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $inputs = $request->all();
+
+        $tag = Tag::findOrFail($id);
+        $tag->update([
+            "name" => $inputs["name"]
+        ]);
+
+        return
+            response()->json(["message" => "Updated successfully", "tag_name" => $inputs["name"]], 200,);
     }
 }

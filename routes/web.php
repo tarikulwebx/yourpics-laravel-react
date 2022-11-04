@@ -30,6 +30,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/getAllTags', [TagController::class, 'getAllTags']);
 Route::get('/getTagBySlug/{slug}', [TagController::class, 'getTagBySlug']);
 Route::get('/getPicturesByTagSlug/{slug}', [TagController::class, 'getPicturesByTagSlug']);
+Route::get('/getTagsWithPagination', [TagController::class, 'getTagsWithPagination']);
+Route::get('/getTagsBySearch/{searchText}', [TagController::class, 'getTagsBySearch']);
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::post('/store-tag', [TagController::class, 'storeTag']);
+    Route::delete('/delete-tag/{id}', [TagController::class, 'deleteTag']);
+    Route::post('/update-tag/{id}', [TagController::class, 'updateTag']);
+});
 
 
 // Picture routes

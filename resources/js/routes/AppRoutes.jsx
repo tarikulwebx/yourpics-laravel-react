@@ -28,6 +28,7 @@ import UnProtected from "./UnProtected";
 
 // Admin components
 import AdminDashboard from "../admin/pages/dashboard/Dashboard";
+import AdminTags from "../admin/pages/tags/Tags";
 import Settings from "../admin/pages/settings/Settings";
 import ProtectedAdmin from "./ProtectedAdmin";
 
@@ -101,6 +102,7 @@ const AppRoutes = () => {
                 }
             >
                 <Route index element={<AdminDashboard />} />
+                <Route path="tags" element={<AdminTags />} />
                 <Route path="settings" element={<Settings />} />
             </Route>
         </Routes>

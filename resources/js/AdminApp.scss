@@ -40,3 +40,16 @@ body {
     color: $gray-900;
 }
 
+//@at-root
+
+$colors: ("primary": $primary, "secondary": $secondary, "white": $white);
+
+@each $name, $hex in $colors {
+    .text-hover-#{$name} {
+        transition: 0.2s all;
+
+        &:hover {
+            color: $hex !important;
+        }
+    }
+}

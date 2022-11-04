@@ -11,7 +11,7 @@ const AdminApp = () => {
                     <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                         <Sidebar />
                     </div>
-                    <div className="col py-3 px-md-3">
+                    <div className="col py-3 px-md-3 overflow-hidden">
                         <main>
                             <Outlet />
                         </main>
