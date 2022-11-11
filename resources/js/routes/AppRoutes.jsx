@@ -31,6 +31,10 @@ import AdminDashboard from "../admin/pages/dashboard/Dashboard";
 import AdminTags from "../admin/pages/tags/Tags";
 import Settings from "../admin/pages/settings/Settings";
 import ProtectedAdmin from "./ProtectedAdmin";
+import Pages from "../admin/pages/site-pages/Pages";
+import AddNewPage from "../admin/components/site-pages/AddNewPage";
+import EditPage from "../admin/components/site-pages/EditPage";
+import PublicPages from "../pages/Pages";
 
 const AppRoutes = () => {
     const { isLoggedIn, isAdmin, user } = useContext(UserContext);
@@ -41,6 +45,7 @@ const AppRoutes = () => {
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
+                <Route path="pages/:pageSlug" element={<PublicPages />} />
                 <Route path="tags" element={<Tags />} />
                 <Route path="tags/:slug" element={<Tag />} />
                 <Route path="uploader/:slug" element={<Uploader />} />
@@ -103,6 +108,9 @@ const AppRoutes = () => {
             >
                 <Route index element={<AdminDashboard />} />
                 <Route path="tags" element={<AdminTags />} />
+                <Route path="pages" element={<Pages />} />
+                <Route path="pages/create" element={<AddNewPage />} />
+                <Route path="pages/edit/:pageId" element={<EditPage />} />
                 <Route path="settings" element={<Settings />} />
             </Route>
         </Routes>

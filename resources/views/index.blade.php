@@ -18,7 +18,12 @@
 </head>
 
 <body>
-    <div id="root"></div>
+    <div id="root">
+
+    </div>
+    <script>
+        var global = global || window;
+    </script>
 </body>
 
 </html>

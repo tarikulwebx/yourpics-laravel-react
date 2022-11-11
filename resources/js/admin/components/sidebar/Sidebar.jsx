@@ -5,6 +5,7 @@ import {
     FaChevronDown,
     FaCog,
     FaHome,
+    FaPager,
     FaTachometerAlt,
     FaTags,
     FaUsers,
@@ -26,6 +27,11 @@ const menuItems = [
         name: "Tags",
         link: "/admin/tags",
         icon: <FaTags className="icon" />,
+    },
+    {
+        name: "Pages",
+        link: "/admin/pages",
+        icon: <FaPager className="icon" />,
     },
 
     {

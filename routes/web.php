@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
@@ -85,6 +86,16 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/getUploaderBySlug/{slug}', [UploaderController::class, 'getUploaderBySlug']);
 Route::get('/getPicturesByUploaderSlug/{slug}', [UploaderController::class, 'getPicturesByUploaderSlug']);
 
+
+// page routes
+Route::get('/getPageBySlug/{slug}', [PageController::class, 'getPageBySlug']);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/getAllPages', [PageController::class, 'getAllPages']);
+    Route::post('/storeNewPage', [PageController::class, 'storeNewPage']);
+    Route::delete('/deletePage/{id}', [PageController::class, 'deletePage']);
+    Route::get('/getPageById/{id}', [PageController::class, 'getPageById']);
+    Route::post('/updatePage/{id}', [PageController::class, 'updatePage']);
+});
 
 // SPA Route
 Route::get("{any}", function () {
