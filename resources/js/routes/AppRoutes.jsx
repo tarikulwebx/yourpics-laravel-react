@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 
 import AdminApp from "../AdminApp";
 import { UserContext } from "../contexts/UserContext";
-import About from "../pages/About";
 import ResetEmail from "../pages/auth/password/ResetEmail";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
@@ -35,6 +34,9 @@ import Pages from "../admin/pages/site-pages/Pages";
 import AddNewPage from "../admin/components/site-pages/AddNewPage";
 import EditPage from "../admin/components/site-pages/EditPage";
 import PublicPages from "../pages/Pages";
+import Slides from "../admin/pages/slide/Slides";
+import AddNewSlide from "../admin/pages/slide/AddNewSlide";
+import EditSlide from "../admin/pages/slide/EditSlide";
 
 const AppRoutes = () => {
     const { isLoggedIn, isAdmin, user } = useContext(UserContext);
@@ -43,7 +45,6 @@ const AppRoutes = () => {
             <Route path="/" element={<PublicApp />}>
                 <Route index element={<Home />} />
                 <Route path="gallery" element={<Gallery />} />
-                <Route path="about" element={<About />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="pages/:pageSlug" element={<PublicPages />} />
                 <Route path="tags" element={<Tags />} />
@@ -112,6 +113,9 @@ const AppRoutes = () => {
                 <Route path="pages/create" element={<AddNewPage />} />
                 <Route path="pages/edit/:pageId" element={<EditPage />} />
                 <Route path="settings" element={<Settings />} />
+                <Route path="slides" element={<Slides />} />
+                <Route path="slides/create" element={<AddNewSlide />} />
+                <Route path="slides/edit/:slideId" element={<EditSlide />} />
             </Route>
         </Routes>
     );

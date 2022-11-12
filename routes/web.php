@@ -4,6 +4,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SlideController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UploaderController;
 use App\Http\Controllers\UserController;
@@ -95,6 +96,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/deletePage/{id}', [PageController::class, 'deletePage']);
     Route::get('/getPageById/{id}', [PageController::class, 'getPageById']);
     Route::post('/updatePage/{id}', [PageController::class, 'updatePage']);
+});
+
+
+// slide routes
+Route::get('/getAllSlides', [SlideController::class, 'getAllSlides']);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/getSlideById/{id}', [SlideController::class, 'getSlideById']);
+    Route::post('/storeNewSlide', [SlideController::class, 'storeNewSlide']);
+    Route::post('/updateSlide/{id}', [SlideController::class, 'updateSlide']);
+    Route::delete('/deleteSlide/{id}', [SlideController::class, 'deleteSlide']);
 });
 
 // SPA Route

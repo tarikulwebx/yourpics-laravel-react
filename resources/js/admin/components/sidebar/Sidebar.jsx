@@ -1,6 +1,6 @@
 import React from "react";
 import { BsFillMenuButtonFill, BsHouse } from "react-icons/bs";
-import { BiChevronDown } from "react-icons/bi";
+import { BiChevronDown, BiSlideshow } from "react-icons/bi";
 import {
     FaChevronDown,
     FaCog,
@@ -32,6 +32,11 @@ const menuItems = [
         name: "Pages",
         link: "/admin/pages",
         icon: <FaPager className="icon" />,
+    },
+    {
+        name: "Slides",
+        link: "/admin/slides",
+        icon: <BiSlideshow className="icon" />,
     },
 
     {

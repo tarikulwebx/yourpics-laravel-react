@@ -1,0 +1,30 @@
+@use "../../../sass/_variables.scss" as *;
+@use "../../../sass/mixins" as *;
+
+    .hero-section {
+    background: linear-gradient(to right, $primary, $secondary);
+
+    .carousel-indicators {
+        bottom: -3.5rem;
+    }
+
+    .search-wrapper {
+        @include glass-effect;
+        border-bottom-color: $gray-400;
+
+        .form-control {
+            padding: 0.65rem 1rem;
+
+            &::placeholder {
+                font-weight: 300;
+            }
+        }
+
+        .btn {
+            border-start-start-radius: 0;
+            border-end-start-radius: 0;
+        }
+
+    }
+    
+}
