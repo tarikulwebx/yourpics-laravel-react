@@ -1,0 +1,84 @@
+@use "../../../sass/variables" as *;
+
+.tag-section {
+    
+    .tags-wrapper {
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.45rem 0.75rem !important;
+            height: auto;
+            font-weight: 500;
+            transition: 0.25s;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        
+
+    }
+
+    .btn-left, .btn-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 20rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: $white;
+        padding: 0;
+        width: 2rem;
+        height: 2rem;
+        transition: 0.2s all;
+        z-index: 2;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: $white;
+        }
+    }
+
+    .btn-left {
+        left: 0;
+    }
+
+    .btn-right {
+        right: 0;
+    }
+
+    .tag-section-inner {
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            z-index: 1;
+            bottom: 0;
+            top: 0;
+            pointer-events: none;
+        }
+
+        &::before {
+            left: 0;
+            background: linear-gradient(270deg,rgba(255, 255, 255, 0) 0,#fff 90%,#fff);
+        }
+
+        &::after {
+            right: 0;
+            background: linear-gradient(90deg,rgba(255, 255, 255, 0) 0,#fff 90%,#fff);
+        }
+
+        
+    }
+}
