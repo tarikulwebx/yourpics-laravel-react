@@ -37,7 +37,9 @@ class PictureController extends Controller
      */
     public function picturesBySearch($searchKey)
     {
-        $pictures = Picture::where('title', 'LIKE', '%' . $searchKey . '%')->with('user')->latest()->paginate();
+        $pictures = Picture::with('user')->where('title', 'LIKE', '%' . $searchKey . '%')->orWhereHas('tags', function ($query) use ($searchKey) {
+            $query->where('name', 'LIKE', '%' . $searchKey . '%');
+        })->latest()->paginate();
 
         return response()->json($pictures);
     }
