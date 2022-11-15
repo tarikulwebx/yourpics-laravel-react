@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Hero.scss";
 
 const Hero = () => {
     const [slides, setSlides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const [popularTags, setPopularTags] = useState([]);
+
+    const [searchInput, setSearchInput] = useState(null);
+    const navigate = useNavigate();
 
     const getAllSlides = () => {
         setIsLoading(true);
@@ -22,15 +28,35 @@ const Hero = () => {
 
     useEffect(() => {
         getAllSlides();
+        getPopularTags();
     }, []);
 
+    // get popular tags
+    const getPopularTags = () => {
+        axios
+            .get("/getPopularTags")
+            .then((res) => {
+                setPopularTags(res.data);
+            })
+            .catch((ex) => {
+                const res = ex.response;
+                // console.log(res);
+            });
+    };
+
+    // handle search form
+    const handleSearchForm = (e) => {
+        e.preventDefault();
+        navigate(`/gallery?search=${searchInput}`);
+    };
+
     return (
-        <section className="hero-section pt-5 mb-4 px-sm-2">
-            <div className="container-xl">
+        <section className="hero-section pt-4 pt-md-5 mb-4 px-sm-2">
+            <div className="container-xl pt-2 pt-md-0">
                 <div
                     id="carouselExampleCaptions"
                     className="carousel carousel-fade"
-                    data-bs-ride="true"
+                    data-bs-ride="false"
                 >
                     <div className="carousel-indicators mb-0">
                         {slides.map((slide, index) => (
@@ -53,8 +79,8 @@ const Hero = () => {
                                 }`}
                                 key={slide.id}
                             >
-                                <div className="row align-items-center gy-4">
-                                    <div className="col-lg-5">
+                                <div className="row align-items-center gy-3 gx-0">
+                                    <div className="col-md-5">
                                         <h1 className="text-light fw-bold">
                                             {slide.title}
                                         </h1>
@@ -78,7 +104,7 @@ const Hero = () => {
                                             </a>
                                         )}
                                     </div>
-                                    <div className="col-lg-7">
+                                    <div className="col-md-7">
                                         <img
                                             src={slide.image}
                                             alt={slide.title}
@@ -91,44 +117,28 @@ const Hero = () => {
                     </div>
                 </div>
 
-                <div className="pb-4 pt-5 mt-5 position-relative">
+                <div className="pb-4 pt-4 pt-md-5 mt-5 position-relative">
                     <div className="row align-items-end gy-4">
                         <div className="col-lg-7">
-                            <strong className="text-black">
+                            <strong className="text-black mb-1 me-2">
                                 Popular Tags:{" "}
                             </strong>
-
-                            <span className="badge rounded-pill text-bg-primary">
-                                Primary
-                            </span>
-                            <span className="badge rounded-pill text-bg-secondary">
-                                Secondary
-                            </span>
-                            <span className="badge rounded-pill text-bg-success">
-                                Success
-                            </span>
-                            <span className="badge rounded-pill text-bg-danger">
-                                Danger
-                            </span>
-                            <span className="badge rounded-pill text-bg-warning">
-                                Warning
-                            </span>
-                            <span className="badge rounded-pill text-bg-info">
-                                Info
-                            </span>
-                            <span className="badge rounded-pill text-bg-light">
-                                Light
-                            </span>
-                            <span className="badge rounded-pill text-bg-dark">
-                                Dark
-                            </span>
+                            {popularTags.map((tag, index) => (
+                                <Link
+                                    to={`/tags/${tag.slug}`}
+                                    className="badge rounded-pill text-bg-light text-decoration-none me-1 mb-1"
+                                    key={tag.id}
+                                >
+                                    {tag.name}
+                                </Link>
+                            ))}
                         </div>
                         <div
                             className="col-lg-5"
                             style={{ marginBottom: "-3.75rem" }}
                         >
-                            <div className="search-wrapper p-3 rounded shadow-sm w-100">
-                                <form action="" method="GET">
+                            <div className="search-wrapper p-2 p-md-3 rounded shadow-sm w-100">
+                                <form onSubmit={handleSearchForm}>
                                     <div className="input-group">
                                         <input
                                             type="text"
@@ -137,6 +147,9 @@ const Hero = () => {
                                             placeholder="Search content..."
                                             aria-label="search input"
                                             aria-describedby="search"
+                                            onChange={(e) =>
+                                                setSearchInput(e.target.value)
+                                            }
                                         />
                                         <span
                                             className="input-group-text p-0 m-0 border-0"
