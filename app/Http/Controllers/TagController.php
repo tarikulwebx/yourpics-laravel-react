@@ -28,7 +28,7 @@ class TagController extends Controller
      */
     public function getPopularTags()
     {
-        $tags = Tag::withCount('pictures')->orderBy('pictures_count', 'desc')->take(10)->get();
+        $tags = Tag::withCount('pictures')->orderBy('pictures_count', 'desc')->take(5)->get();
         return response()->json($tags, 200,);
     }
 

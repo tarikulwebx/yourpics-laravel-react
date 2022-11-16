@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Hero from "../components/hero/Hero";
 import HomePictures from "../components/home-pictures/HomePictures";
 import TagsBar from "../components/tags-bar/TagsBar";
@@ -14,4 +14,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default memo(Home);
