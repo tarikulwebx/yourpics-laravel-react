@@ -22,7 +22,7 @@ const TagsBar = () => {
     const getAllTags = () => {
         setIsLoading(true);
         axios
-            .get("/getAllTags")
+            .get("/getTagsHavePictures")
             .then((res) => {
                 setTags(res.data);
                 setIsLoading(false);
@@ -39,8 +39,8 @@ const TagsBar = () => {
     }, []);
 
     return (
-        <section className="tag-section">
-            <div className="container-xl">
+        <section className="tag-section py-4">
+            <div className="container-xl py-1">
                 <div className="tag-section-inner position-relative">
                     <button className="btn btn-left" onClick={handleScrollLeft}>
                         <FaAngleLeft />
@@ -70,16 +70,10 @@ const TagsBar = () => {
                             : tags.map((tag, index) => (
                                   <Link
                                       to={`/tags/${tag.slug}`}
-                                      className="badge rounded-pill bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center gap-2"
+                                      className="badge rounded-pill bg-primary bg-opacity-10 text-primary"
                                       key={tag.id}
                                   >
                                       {tag.name}{" "}
-                                      <small
-                                          className="text-secondary"
-                                          style={{ opacity: "0.6" }}
-                                      >
-                                          {tag.pictures_count}
-                                      </small>
                                   </Link>
                               ))}
                     </div>

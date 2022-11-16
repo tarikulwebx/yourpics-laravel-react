@@ -30,6 +30,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Tag routes
 Route::get('/getAllTags', [TagController::class, 'getAllTags']);
+Route::get('/getTagsHavePictures', [TagController::class, 'getTagsHavePictures']);
 Route::get('/getPopularTags', [TagController::class, 'getPopularTags']);
 Route::get('/getTagBySlug/{slug}', [TagController::class, 'getTagBySlug']);
 Route::get('/getPicturesByTagSlug/{slug}', [TagController::class, 'getPicturesByTagSlug']);

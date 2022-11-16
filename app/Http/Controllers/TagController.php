@@ -13,6 +13,16 @@ class TagController extends Controller
         return response()->json($tags, 200,);
     }
 
+
+    /**
+     * get tags have pictures
+     */
+    public function getTagsHavePictures()
+    {
+        $tags = Tag::withCount('pictures')->has('pictures')->orderBy('name')->withCount('pictures')->get();
+        return response()->json($tags, 200,);
+    }
+
     /**
      * get popular tags
      */

@@ -1,5 +1,6 @@
 import React from "react";
 import Hero from "../components/hero/Hero";
+import HomePictures from "../components/home-pictures/HomePictures";
 import TagsBar from "../components/tags-bar/TagsBar";
 
 const Home = () => {
@@ -7,7 +8,8 @@ const Home = () => {
         <>
             <Hero />
             <TagsBar />
-            <h3>home</h3>
+            <HomePictures />
+            <div className="mb-5"></div>
         </>
     );
 };

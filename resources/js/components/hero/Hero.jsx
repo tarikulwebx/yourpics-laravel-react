@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Hero.scss";
 
@@ -55,7 +55,7 @@ const Hero = () => {
     };
 
     return (
-        <section className="hero-section pt-4 pt-md-5 mb-4 px-sm-2">
+        <section className="hero-section pt-4 pt-md-5 px-sm-2">
             <div className="container-xl pt-2 pt-md-0">
                 {isLoading ? (
                     <div
@@ -235,4 +235,4 @@ const Hero = () => {
     );
 };
 
-export default Hero;
+export default memo(Hero);
