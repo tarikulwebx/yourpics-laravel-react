@@ -58,40 +58,46 @@ const Hero = () => {
         <section className="hero-section pt-4 pt-md-5 mb-4 px-sm-2">
             <div className="container-xl pt-2 pt-md-0">
                 {isLoading ? (
-                    <div className="row align-items-center gy-3 gx-3">
+                    <div
+                        className="row align-items-center gy-3 gx-3"
+                        style={{ minHeight: "350px" }}
+                    >
                         <div className="col-md-5">
                             <h1 className="text-light fw-bold placeholder-grow mb-3">
                                 <span className="w-100 placeholder rounded"></span>
                             </h1>
                             {[...Array(4)].map((el, index) => (
                                 <p
-                                    className="lead fw-normal text-white-50 placeholder-grow mb-0"
+                                    className="lead fw-normal text-white-50 placeholder-grow mb-1"
                                     key={index}
                                 >
                                     <span className="w-100 placeholder rounded"></span>
                                 </p>
                             ))}
+                            <p className="lead fw-normal text-white-50 placeholder-grow mb-1">
+                                <span
+                                    className="placeholder rounded me-3"
+                                    style={{ width: "120px" }}
+                                ></span>
+                                <span
+                                    className="placeholder rounded"
+                                    style={{ width: "120px" }}
+                                ></span>
+                            </p>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-7 text-center">
                             <div
+                                className="spinner-border text-light"
+                                role="status"
+                            >
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                            {/* <div
                                 className="text-center position-relative"
                                 style={{ width: "100%", height: "350px" }}
-                            >
-                                <div
-                                    className="spinner-border text-white"
-                                    style={{
-                                        position: "absolute",
-                                        top: "50%",
-                                        left: "50%",
-                                        transform: "translate(-50%, -50%)",
-                                    }}
-                                    role="status"
-                                >
-                                    <span className="visually-hidden">
-                                        Loading...
-                                    </span>
-                                </div>
-                            </div>
+                            ></div> */}
                         </div>
                     </div>
                 ) : (
