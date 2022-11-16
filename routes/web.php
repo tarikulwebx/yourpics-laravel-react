@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PictureController;
@@ -109,6 +110,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/updateSlide/{id}', [SlideController::class, 'updateSlide']);
     Route::delete('/deleteSlide/{id}', [SlideController::class, 'deleteSlide']);
 });
+
+
+// contact us routes
+Route::post('/sendContactMessage', [ContactController::class, 'store']);
 
 // SPA Route
 Route::get("{any}", function () {
